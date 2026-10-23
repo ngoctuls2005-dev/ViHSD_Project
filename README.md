@@ -27,6 +27,7 @@ Thẻ Hugging Face mô tả khoảng 33 nghìn bình luận và có các tập `
 
 - [Phát biểu bài toán](docs/problem_statement.md)
 - [Nguồn và cách truy cập dữ liệu](docs/data_access.md)
+- [Quy tắc tiền xử lý](docs/preprocessing.md)
 - [Giải thích cách đánh giá](docs/evaluation_guide.md)
 - [Kế hoạch và nhật ký tiến độ](docs/PROGRESS.md)
 - [Báo cáo Bài kiểm tra 1](reports/exam1_report.md)
@@ -58,3 +59,11 @@ python scripts/run_eda.py --input "data/raw/<tep_csv>" --text-column "<cot_van_b
 ```
 
 Thay phần trong dấu `<...>` bằng đường dẫn và tên cột thực tế; lệnh không mặc định schema. Kết quả được ghi vào `artifacts/eda/`, thư mục cục bộ bị Git bỏ qua. Không chia sẻ thư mục đó trước khi rà soát từ/cụm từ trích xuất để tránh công khai nội dung nhạy cảm.
+
+Để kiểm tra chất lượng và giao nhau giữa các split, chạy `scripts/audit_quality.py` với các cột và nhãn đã xác minh. Mỗi split cần được khai báo bằng `--split "ten=data/raw/tep.csv"`; lặp lại tùy số split và khai báo từng lớp bằng `--allowed-label`:
+
+```powershell
+python scripts/audit_quality.py --split "train=data/raw/train.csv" --split "test=data/raw/test.csv" --text-column "<cot_van_ban>" --label-column "<cot_nhan>" --allowed-label CLEAN --allowed-label OFFENSIVE --allowed-label HATE
+```
+
+Các tên tệp/cột trên là tham số cần thay bằng thông tin đã xác minh trong dữ liệu thật. Kết quả ghi vào `artifacts/quality/` và không chứa bình luận gốc.

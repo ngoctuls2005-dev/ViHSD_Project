@@ -36,7 +36,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** định lượng thiếu/rỗng, trùng, trùng khác nhãn, nhãn không hợp lệ, bất thường, teencode, ký tự lặp, mất cân bằng và rò rỉ; xử lý có kiểm soát, giữ phủ định/dấu câu/emoji có ý nghĩa, không sửa nhãn và không ghi đè bản gốc; có ví dụ an toàn.
 
-**Tiêu chí:** 6, 7. **Trạng thái:** chưa bắt đầu.
+**Tiêu chí:** 6, 7. **Trạng thái:** đang làm module và unit test; thống kê/lý do xử lý trên ViHSD thật còn chờ dữ liệu.
 
 ### Giai đoạn 4 – Chuẩn bị dữ liệu và đặc trưng
 
@@ -67,6 +67,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Kiểm tra tài liệu: đạt; các tệp bắt buộc tồn tại, liên kết Markdown nội bộ đều tới tệp có thật, báo cáo có đủ mục 1–9 và kế hoạch có đủ năm giai đoạn.
 - Kiểm tra Git: `git diff --cached --check` không phát hiện lỗi khoảng trắng; danh sách đưa vào commit chỉ gồm mã/tài liệu, không có `TEC/` hay dữ liệu.
 - Commit `e6a57e2` (`docs: khoi tao ke hoach va tai lieu ViHSD`) đã tạo trên `main`; lần push thất bại vì máy không phân giải được `github.com`.
+- Commit `9158cef` (`feat: them cong cu EDA va xac minh nguon ViHSD`) đã tạo trên `main`; chưa đẩy được do lỗi DNS đã ghi nhận ở trên.
 
 ### 2026-10-23 – Công cụ EDA có thể tái sử dụng
 
@@ -75,6 +76,14 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Kiểm tra đóng gói: `python -m pip install -e . --no-deps` thành công; trợ giúp CLI chạy được.
 - Kiểm thử: `python -m unittest discover -s tests -v` — 8 kiểm thử đạt trên fixture nhỏ dùng cho kiểm thử kỹ thuật; không phải kết quả ViHSD.
 - Hạn chế: chưa có schema/cột/thống kê thực tế. Giai đoạn 2 và tiêu chí 3–5 vẫn chưa hoàn thành cho tới khi có quyền truy cập dữ liệu.
+
+### 2026-10-23 – Phát hiện lỗi và tiền xử lý bảo toàn văn bản
+
+- Thêm bảng thống kê thiếu/rỗng, kiểu dữ liệu văn bản, trùng sau NFC/chuẩn hóa khoảng trắng/không phân biệt hoa thường, trùng khác nhãn, nhãn ngoài danh sách, ký tự điều khiển/lặp, teencode và ngoại lệ độ dài theo IQR.
+- Thêm thống kê cân bằng lớp và kiểm tra số văn bản trùng giữa các split; đầu ra không chứa nội dung bình luận.
+- Thêm module tiền xử lý dùng Unicode NFC, gộp khoảng trắng và từ điển viết tắt có kiểm soát; giữ phủ định, dấu câu, emoji và bản gốc. Bảng đối chiếu văn bản được cảnh báo chỉ dùng cục bộ.
+- Kiểm thử: `python -m unittest discover -s tests -v` — 15 kiểm thử đạt trên fixture kỹ thuật; không phải kết quả ViHSD.
+- Hạn chế: chưa thể định lượng vấn đề, chọn quy tắc theo tần suất thật hoặc so sánh trước/sau trên ViHSD. Tiêu chí 6–7 vẫn chưa hoàn tất.
 
 ## Bằng chứng và quyết định chưa xác minh
 

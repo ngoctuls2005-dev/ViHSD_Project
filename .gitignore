@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local assignment materials and data that may contain real comments
+/TEC/
+/data/raw/
+/data/processed/
+/data/external/
+/artifacts/
+/.env
+/.env.*
+!/.env.example

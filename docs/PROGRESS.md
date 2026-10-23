@@ -8,7 +8,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 - Repository: `ngoctuls2005-dev/ViHSD_Project`, nhánh chính `main`.
 - Điểm bắt đầu: commit `2f3d61c707359c824921013813f484abcea9ca6c` (`Initial commit`), chỉ có README và `.gitignore`.
-- Trạng thái dữ liệu: chưa tải/đọc nội dung ViHSD; trang Hugging Face yêu cầu chấp thuận điều kiện và chia sẻ thông tin tài khoản để truy cập tệp. Thẻ ghi metadata MIT, còn README của tác giả nói dữ liệu chỉ dùng cho nghiên cứu; phạm vi quyền sử dụng/tái phân phối chưa rõ.
+- Trạng thái dữ liệu: chưa tải/đọc nội dung ViHSD; tệp bị chặn sau yêu cầu chấp thuận điều kiện trên Hugging Face. Thẻ ghi metadata MIT, còn README của tác giả nói dữ liệu chỉ dùng cho nghiên cứu; phạm vi quyền sử dụng/tái phân phối chưa rõ.
 - Trạng thái mô hình: chưa huấn luyện, đúng phạm vi Bài kiểm tra 1.
 - Cập nhật gần nhất: 2026-10-23.
 
@@ -28,7 +28,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** số mẫu/cột/kiểu dữ liệu và phân bố nhãn được tạo từ dữ liệu thật; nguồn và giới hạn sử dụng được ghi rõ; biểu đồ có tiêu đề, nhãn trục và nhận xét cụ thể; không công khai bình luận thật trái điều kiện.
 
-**Tiêu chí:** 3, 4, 5. **Trạng thái:** chưa bắt đầu; đã đọc metadata nguồn, cần tiếp tục xác minh quyền truy cập và lấy dữ liệu thật.
+**Tiêu chí:** 3, 4, 5. **Trạng thái:** đang làm phần công cụ; chưa thể hoàn tất mô tả schema và kết quả EDA vì chưa có quyền truy cập nội dung dữ liệu thật. Các kiểm thử hiện chỉ dùng fixture kỹ thuật nhỏ, không dùng làm số liệu nghiên cứu.
 
 ### Giai đoạn 3 – Phát hiện và xử lý chất lượng dữ liệu
 
@@ -66,7 +66,15 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Kết quả kiểm thử phần mềm: chưa có mã thực thi ở giai đoạn này nên chưa có bộ kiểm thử phần mềm để chạy.
 - Kiểm tra tài liệu: đạt; các tệp bắt buộc tồn tại, liên kết Markdown nội bộ đều tới tệp có thật, báo cáo có đủ mục 1–9 và kế hoạch có đủ năm giai đoạn.
 - Kiểm tra Git: `git diff --cached --check` không phát hiện lỗi khoảng trắng; danh sách đưa vào commit chỉ gồm mã/tài liệu, không có `TEC/` hay dữ liệu.
-- Commit/push: chuẩn bị thực hiện sau bước kiểm tra an toàn; SHA và trạng thái push được báo trong nhật ký bàn giao.
+- Commit `e6a57e2` (`docs: khoi tao ke hoach va tai lieu ViHSD`) đã tạo trên `main`; lần push thất bại vì máy không phân giải được `github.com`.
+
+### 2026-10-23 – Công cụ EDA có thể tái sử dụng
+
+- Thêm hướng dẫn nguồn/truy cập, bộ đọc CSV không giả định tên cột, kiểm tra schema theo tên cột người chạy chỉ định, thống kê nhãn/độ dài/n-gram bề mặt/dấu hiệu viết và vẽ biểu đồ tổng hợp.
+- Thêm lệnh `scripts/run_eda.py`; đầu ra cục bộ vào `artifacts/eda/`, không ghi nội dung bình luận vào bảng độ dài hoặc bảng dấu hiệu.
+- Kiểm tra đóng gói: `python -m pip install -e . --no-deps` thành công; trợ giúp CLI chạy được.
+- Kiểm thử: `python -m unittest discover -s tests -v` — 8 kiểm thử đạt trên fixture nhỏ dùng cho kiểm thử kỹ thuật; không phải kết quả ViHSD.
+- Hạn chế: chưa có schema/cột/thống kê thực tế. Giai đoạn 2 và tiêu chí 3–5 vẫn chưa hoàn thành cho tới khi có quyền truy cập dữ liệu.
 
 ## Bằng chứng và quyết định chưa xác minh
 

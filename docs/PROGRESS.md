@@ -36,7 +36,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** định lượng thiếu/rỗng, trùng, trùng khác nhãn, nhãn không hợp lệ, bất thường, teencode, ký tự lặp, mất cân bằng và rò rỉ; xử lý có kiểm soát, giữ phủ định/dấu câu/emoji có ý nghĩa, không sửa nhãn và không ghi đè bản gốc; có ví dụ an toàn.
 
-**Tiêu chí:** 6, 7. **Trạng thái:** đang làm module và unit test; thống kê/lý do xử lý trên ViHSD thật còn chờ dữ liệu.
+**Tiêu chí:** 6, 7. **Trạng thái:** module và unit test đã có; thống kê và lý do chọn xử lý trên ViHSD thật còn chờ dữ liệu.
 
 ### Giai đoạn 4 – Chuẩn bị dữ liệu và đặc trưng
 
@@ -44,7 +44,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** vectorizer chỉ `fit` trên Train, chỉ `transform` Validation/Test; không oversampling hay học thống kê trên toàn bộ dữ liệu; không dùng Test để chọn tham số/đặc trưng; có kiểm thử phù hợp.
 
-**Tiêu chí:** 8. **Trạng thái:** chưa bắt đầu.
+**Tiêu chí:** 8. **Trạng thái:** bộ chia tập/TF-IDF đã có; chưa áp dụng lên các split ViHSD thật nên tiêu chí chưa hoàn tất.
 
 ### Giai đoạn 5 – Báo cáo, kiểm thử và chuẩn bị vấn đáp
 
@@ -84,6 +84,15 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Thêm module tiền xử lý dùng Unicode NFC, gộp khoảng trắng và từ điển viết tắt có kiểm soát; giữ phủ định, dấu câu, emoji và bản gốc. Bảng đối chiếu văn bản được cảnh báo chỉ dùng cục bộ.
 - Kiểm thử: `python -m unittest discover -s tests -v` — 15 kiểm thử đạt trên fixture kỹ thuật; không phải kết quả ViHSD.
 - Hạn chế: chưa thể định lượng vấn đề, chọn quy tắc theo tần suất thật hoặc so sánh trước/sau trên ViHSD. Tiêu chí 6–7 vẫn chưa hoàn tất.
+- Commit `878fbef` (`feat: them kiem tra chat luong va tien xu ly van ban`) đã tạo trên `main`; chưa đẩy được do lỗi DNS đã ghi nhận.
+
+### 2026-10-23 – Chia hold-out và chuẩn bị TF-IDF
+
+- Thêm cách giữ nguyên split chính thức có kiểm tra schema; phương án dự phòng chia ba tập có phân tầng và `random_state` cố định.
+- Thêm kiểm tra dừng khi có bình luận trùng giữa các split theo quy tắc NFC/khoảng trắng/không phân biệt hoa thường.
+- Thêm adapter tách từ tiếng Việt bằng PyVi và hai TF-IDF riêng: n-gram từ, n-gram ký tự. `fit_transform` chỉ chạy trên Train; Validation/Test chỉ `transform`; nhãn được giữ theo đúng thứ tự.
+- Kiểm thử: `python -m unittest discover -s tests -v` — 21 kiểm thử đạt trên fixture kỹ thuật. Kiểm thử TF-IDF dùng tokenizer giả lập để không phụ thuộc package PyVi; PyVi chưa được cài trong môi trường hiện tại.
+- Chưa có dữ liệu thật để xác nhận split nào là chính thức, kích thước ma trận, lỗi trùng lặp thực tế hay tính phù hợp của từ vựng. Tiêu chí 8 vẫn chưa hoàn tất.
 
 ## Bằng chứng và quyết định chưa xác minh
 

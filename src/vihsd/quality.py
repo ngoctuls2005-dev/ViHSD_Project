@@ -158,7 +158,7 @@ def cross_split_duplicate_summary(
             if value
         }
     rows = []
-    for split_a, split_b in combinations(sorted(normalized_by_split), 2):
+    for split_a, split_b in combinations(normalized_by_split, 2):
         shared = normalized_by_split[split_a] & normalized_by_split[split_b]
         rows.append(
             {

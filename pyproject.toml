@@ -12,6 +12,7 @@ dependencies = [
     "pandas>=2.2",
     "matplotlib>=3.9",
     "scikit-learn>=1.5",
+    "pyvi>=0.1.1",
 ]
 
 [tool.setuptools.packages.find]

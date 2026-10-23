@@ -29,6 +29,7 @@ Thẻ Hugging Face mô tả khoảng 33 nghìn bình luận và có các tập `
 - [Nguồn và cách truy cập dữ liệu](docs/data_access.md)
 - [Quy tắc tiền xử lý](docs/preprocessing.md)
 - [Chia tập và TF-IDF](docs/vectorization.md)
+- [Câu hỏi gợi ý vấn đáp](docs/viva_questions.md)
 - [Giải thích cách đánh giá](docs/evaluation_guide.md)
 - [Kế hoạch và nhật ký tiến độ](docs/PROGRESS.md)
 - [Báo cáo Bài kiểm tra 1](reports/exam1_report.md)
@@ -42,6 +43,8 @@ Thẻ Hugging Face mô tả khoảng 33 nghìn bình luận và có các tập `
 5. Hoàn thiện báo cáo, kiểm thử và chuẩn bị vấn đáp.
 
 Xem `docs/PROGRESS.md` để biết đầu ra, tiêu chí hoàn thành và trạng thái từng giai đoạn. Hướng dẫn cài đặt môi trường và chạy EDA cơ bản nằm bên dưới.
+
+Notebook thực hành: `notebooks/exam1_practice.ipynb`. Mặc định notebook dùng fixture nhỏ, được ghi rõ là minh họa và không phải ViHSD.
 
 
 ## Môi trường phát triển

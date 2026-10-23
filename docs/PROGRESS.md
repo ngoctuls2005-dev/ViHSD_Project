@@ -52,7 +52,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** notebook chạy lại từ đầu trên dữ liệu có quyền sử dụng; bảng, hình và số liệu được tạo từ kết quả thực tế; mọi giới hạn/chưa xác minh được nêu; sinh viên có thể giải thích và thao tác lại.
 
-**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** chưa bắt đầu.
+**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** tài liệu hướng dẫn, notebook và câu hỏi gợi ý đã có; cần bằng chứng dữ liệu thật và sinh viên tự thực hành.
 
 ## Nhật ký tiến độ
 
@@ -93,6 +93,14 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Thêm adapter tách từ tiếng Việt bằng PyVi và hai TF-IDF riêng: n-gram từ, n-gram ký tự. `fit_transform` chỉ chạy trên Train; Validation/Test chỉ `transform`; nhãn được giữ theo đúng thứ tự.
 - Kiểm thử: `python -m unittest discover -s tests -v` — 21 kiểm thử đạt trên fixture kỹ thuật. Kiểm thử TF-IDF dùng tokenizer giả lập để không phụ thuộc package PyVi; PyVi chưa được cài trong môi trường hiện tại.
 - Chưa có dữ liệu thật để xác nhận split nào là chính thức, kích thước ma trận, lỗi trùng lặp thực tế hay tính phù hợp của từ vựng. Tiêu chí 8 vẫn chưa hoàn tất.
+- Commit `43f2bd5` (`feat: chuan bi split va dac trung TF-IDF`) đã tạo trên `main`; chưa đồng bộ được với GitHub vì lỗi DNS.
+
+### 2026-10-23 – Notebook thực hành và vấn đáp
+
+- Thêm `notebooks/exam1_practice.ipynb` với chế độ fixture được cảnh báo rõ, chế độ CSV yêu cầu điền cột đã xác minh, đếm nhãn, vẽ biểu đồ, thống kê độ dài, rà soát trùng, thử quy tắc chuẩn hóa và so sánh trước/sau.
+- Thêm câu hỏi/trả lời gợi ý cho hold-out, chia tập, F1 Macro, mất cân bằng, rò rỉ và giới hạn của fixture.
+- Notebook được chạy từ đầu trong kiểm thử bằng fixture và không lưu output vào tệp; kiểm thử toàn bộ: `python -m unittest discover -s tests -v` — 22 kiểm thử đạt.
+- Chưa chạy notebook với dữ liệu thật; sinh viên vẫn cần tự thực hành và giải thích số liệu. Báo cáo cuối vẫn chờ dữ liệu thật cho các tiêu chí 3–8.
 
 ## Bằng chứng và quyết định chưa xác minh
 

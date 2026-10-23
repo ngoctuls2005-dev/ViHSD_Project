@@ -1,6 +1,6 @@
 # Báo cáo Bài kiểm tra 1 – ViHSD
 
-> **Trạng thái:** bản nháp khởi tạo. Chỉ các mục có bằng chứng thực tế mới được xem là hoàn tất. Chưa có thống kê hoặc kết quả mô hình nào được tạo.
+> **Trạng thái:** bản nháp. Chỉ các mục có bằng chứng thực tế mới được xem là hoàn tất. Metadata nguồn đã xem nhưng dữ liệu không truy cập được trong phiên này; chưa có thống kê, biểu đồ hoặc kết quả mô hình ViHSD nào được tạo.
 
 ## 1. Phát biểu bài toán
 
@@ -15,6 +15,7 @@ F1 Macro là chỉ số chính dự kiến vì tính F1 riêng cho từng lớp 
 ## 3. Nguồn và mô tả dữ liệu
 
 - Nguồn: [ViHSD trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd) và [repository của nhóm tác giả](https://github.com/sonlam1102/vihsd). Thẻ Hugging Face mô tả khoảng 33 nghìn bình luận, ba nhãn `HATE`, `OFFENSIVE`, `CLEAN`, định dạng CSV và các tập `train`, `validation`, `test`; README tác giả nêu 33.400 bình luận.
+- Tài liệu nghiên cứu: Luu, Son T.; Nguyen, Kiet Van; Nguyen, Ngan Luu-Thuy. (2021). “A Large-scale Dataset for Hate Speech Detection on Vietnamese Social Media Texts.” *IEA/AIE 2021*, tr. 415–426. [arXiv:2103.11528](https://arxiv.org/abs/2103.11528), [DOI](https://doi.org/10.1007/978-3-030-79457-6_35).
 - Trang Hugging Face ghi metadata giấy phép MIT nhưng yêu cầu chấp thuận điều kiện/chia sẻ thông tin tài khoản để xem tệp. README của tác giả yêu cầu liên hệ để lấy dữ liệu và nói dữ liệu chỉ dùng cho nghiên cứu. Phạm vi áp dụng của giấy phép và quyền truy cập/tái phân phối chưa được làm rõ; chưa tải hay đọc nội dung dữ liệu.
 - Tên cột, kiểu dữ liệu thực tế, số mẫu theo tập/lớp, điều kiện chi tiết, cách tải có thể tái tạo và từ điển dữ liệu: **chưa xác minh**, chờ quyền truy cập dữ liệu.
 - Không đưa dữ liệu gốc hoặc bình luận thật vào repository công khai khi chưa xác nhận quyền.
@@ -37,7 +38,7 @@ F1 Macro là chỉ số chính dự kiến vì tính F1 riêng cho từng lớp 
 
 ## 8. Chuẩn bị dữ liệu cho mô hình
 
-**Chưa thực hiện.** Ưu tiên các tập chính thức; nếu tự chia sẽ dùng chiến lược phù hợp, phân tầng và seed cố định. TF-IDF n-gram từ/ký tự chỉ `fit` trên Train; Validation/Test chỉ `transform`. Sẽ báo cáo kích thước tập và đặc trưng sau khi chạy mã.
+Đã có mã giữ nguyên các split chính thức hoặc chia phân tầng với seed cố định, kiểm tra trùng giữa các split và tạo TF-IDF n-gram từ/ký tự. Mã chỉ `fit_transform` trên Train và chỉ `transform` Validation/Test; chưa huấn luyện mô hình. **Chưa chạy trên ViHSD thật** vì chưa truy cập được nội dung dữ liệu; kích thước split/ma trận và xác nhận không rò rỉ thực tế còn thiếu.
 
 ## 9. Phương pháp và chỉ số đánh giá
 

@@ -67,7 +67,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Kiểm tra tài liệu: đạt; các tệp bắt buộc tồn tại, liên kết Markdown nội bộ đều tới tệp có thật, báo cáo có đủ mục 1–9 và kế hoạch có đủ năm giai đoạn.
 - Kiểm tra Git: `git diff --cached --check` không phát hiện lỗi khoảng trắng; danh sách đưa vào commit chỉ gồm mã/tài liệu, không có `TEC/` hay dữ liệu.
 - Commit `e6a57e2` (`docs: khoi tao ke hoach va tai lieu ViHSD`) đã tạo trên `main`; lần push thất bại vì máy không phân giải được `github.com`.
-- Commit `9158cef` (`feat: them cong cu EDA va xac minh nguon ViHSD`) đã tạo trên `main`; chưa đẩy được do lỗi DNS đã ghi nhận ở trên.
+- Commit `9158cef` (`feat: them cong cu EDA va xac minh nguon ViHSD`) đã tạo trên `main`; lần push ban đầu thất bại do DNS, sau đó đã được đẩy cùng các giai đoạn còn lại.
 
 ### 2026-10-23 – Công cụ EDA có thể tái sử dụng
 
@@ -84,7 +84,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Thêm module tiền xử lý dùng Unicode NFC, gộp khoảng trắng và từ điển viết tắt có kiểm soát; giữ phủ định, dấu câu, emoji và bản gốc. Bảng đối chiếu văn bản được cảnh báo chỉ dùng cục bộ.
 - Kiểm thử: `python -m unittest discover -s tests -v` — 15 kiểm thử đạt trên fixture kỹ thuật; không phải kết quả ViHSD.
 - Hạn chế: chưa thể định lượng vấn đề, chọn quy tắc theo tần suất thật hoặc so sánh trước/sau trên ViHSD. Tiêu chí 6–7 vẫn chưa hoàn tất.
-- Commit `878fbef` (`feat: them kiem tra chat luong va tien xu ly van ban`) đã tạo trên `main`; chưa đẩy được do lỗi DNS đã ghi nhận.
+- Commit `878fbef` (`feat: them kiem tra chat luong va tien xu ly van ban`) đã tạo trên `main` và hiện đã được đẩy lên GitHub.
 
 ### 2026-10-23 – Chia hold-out và chuẩn bị TF-IDF
 
@@ -93,7 +93,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Thêm adapter tách từ tiếng Việt bằng PyVi và hai TF-IDF riêng: n-gram từ, n-gram ký tự. `fit_transform` chỉ chạy trên Train; Validation/Test chỉ `transform`; nhãn được giữ theo đúng thứ tự.
 - Kiểm thử: `python -m unittest discover -s tests -v` — 21 kiểm thử đạt trên fixture kỹ thuật. Kiểm thử TF-IDF dùng tokenizer giả lập để không phụ thuộc package PyVi; PyVi chưa được cài trong môi trường hiện tại.
 - Chưa có dữ liệu thật để xác nhận split nào là chính thức, kích thước ma trận, lỗi trùng lặp thực tế hay tính phù hợp của từ vựng. Tiêu chí 8 vẫn chưa hoàn tất.
-- Commit `43f2bd5` (`feat: chuan bi split va dac trung TF-IDF`) đã tạo trên `main`; chưa đồng bộ được với GitHub vì lỗi DNS.
+- Commit `43f2bd5` (`feat: chuan bi split va dac trung TF-IDF`) đã tạo trên `main` và hiện đã được đẩy lên GitHub.
 
 ### 2026-10-23 – Notebook thực hành và vấn đáp
 
@@ -101,6 +101,13 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Thêm câu hỏi/trả lời gợi ý cho hold-out, chia tập, F1 Macro, mất cân bằng, rò rỉ và giới hạn của fixture.
 - Notebook được chạy từ đầu trong kiểm thử bằng fixture và không lưu output vào tệp; kiểm thử toàn bộ: `python -m unittest discover -s tests -v` — 22 kiểm thử đạt.
 - Chưa chạy notebook với dữ liệu thật; sinh viên vẫn cần tự thực hành và giải thích số liệu. Báo cáo cuối vẫn chờ dữ liệu thật cho các tiêu chí 3–8.
+
+## Trạng thái bàn giao – 2026-10-23
+
+- Năm commit giai đoạn đã được đẩy thành công lên `origin/main`, đến commit `287ffbc` (`docs: them notebook thuc hanh va huong dan van dap`). Lần push đầu gặp lỗi phân giải DNS; push sau đã thành công.
+- Trước khi push, kiểm tra diff và danh sách tệp xác nhận không có `TEC/`, dữ liệu ViHSD, `.env` hay bình luận thật. Notebook được commit không có output.
+- Kiểm thử cuối: `python -m unittest discover -s tests -v` — 22 kiểm thử đạt; `python -m compileall -q src scripts tests` đạt; kiểm tra liên kết/tệp Markdown và notebook sạch đạt.
+- Tiêu chí 1–2 và tài liệu hướng dẫn tiêu chí 9 đã được viết; tiêu chí 10 có notebook và câu hỏi luyện tập. Tiêu chí 3–8 chưa thể công bố hoàn tất vì chưa truy cập được nội dung ViHSD, nên chưa có schema, thống kê, biểu đồ, bảng vấn đề hay kích thước ma trận từ dữ liệu thật.
 
 ## Bằng chứng và quyết định chưa xác minh
 

@@ -173,4 +173,3 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Báo cáo ghi 25 kiểm thử đạt trong 23,91 giây. Codex chạy lại trong worktree bài tập bằng `$env:MPLBACKEND='Agg'; $env:VIHSD_RUN_INTEGRATION='1'; .\\.venv\\Scripts\\python.exe -m pytest -q tests`; kết quả **25 passed in 23.42s**. Kết quả kiểm thử xác nhận kỹ thuật, không xác minh người thực hiện hay câu trả lời vấn đáp.
 - Cập nhật nhật ký đóng góp, checklist Tú, bảng phân công, năm bài thực hành, hướng dẫn kết quả và bảng đối chiếu tiêu chí 9–10. Ghi rõ Tú **tự báo cáo hoàn thành**; không trình bày phần nói/thực hành tại lớp như đã được người khác chứng kiến. Tài vẫn chưa xác nhận.
 - Phần còn cần người học/giảng viên xác nhận: Tú kiểm tra lại nội dung nhật ký; phần trình bày vấn đáp/thao tác trực tiếp chỉ được đánh giá độc lập khi có buổi hỏi đáp hoặc thực hành; Tài tự gửi nhật ký của mình. Không tự gán điểm hoặc xác nhận của giảng viên.
-

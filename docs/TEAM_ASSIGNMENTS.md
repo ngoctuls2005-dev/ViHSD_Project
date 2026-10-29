@@ -42,4 +42,3 @@ Các kết quả nhóm đã xác minh: 33.400 bình luận (Train 24.048, Valida
 - [Năm bài thực hành](practical_exercises.md)
 - [Nhật ký đóng góp](contributions.md)
 - [Báo cáo Bài kiểm tra 1](../reports/exam1_report.md)
-

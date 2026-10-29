@@ -127,4 +127,3 @@ Mở [`docs/viva_questions.md`](viva_questions.md) và tự trả lời các câ
 - [x] Đã tự làm bài chính 1 và 3 (Tú tự báo cáo).
 - [x] Đã tự làm phần học chéo 2, 4 và 5 (Tú tự báo cáo; số liệu kỹ thuật đã đối chiếu).
 - [x] Đã tự trả lời vấn đáp và cập nhật nhật ký của mình (Tú tự báo cáo; chưa có người chứng kiến độc lập).
-

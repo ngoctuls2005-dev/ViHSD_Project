@@ -55,4 +55,3 @@ Codex đã chuẩn bị bảng phân công, hướng dẫn bắt đầu và bài
 2. Dẫn tệp, lệnh hoặc ảnh chụp đã lược bỏ thông tin nhạy cảm. Không chụp hoặc gửi bình luận thật, token hay đường dẫn chứa thông tin cá nhân.
 3. Để thành viên tự xác nhận dòng của mình. Commit chỉ chứng minh trạng thái tệp, không tự chứng minh ai đã thao tác.
 4. Nếu chưa làm, để trạng thái **Chưa xác nhận hoàn thành**; không đánh dấu hoàn tất dựa trên phân công hoặc kết quả chung của nhóm.
-

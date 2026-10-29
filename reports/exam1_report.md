@@ -206,4 +206,3 @@ F1 Macro là chỉ số chính vì ba lớp có tỷ lệ rất khác nhau. Cầ
 - Tú đã gửi báo cáo tự xác nhận ngày 2026-10-29; các thao tác cá nhân được gắn nhãn tự báo cáo trong [`docs/contributions.md`](../docs/contributions.md), không suy diễn từ danh tính commit. Tài chưa xác nhận.
 - Năm bài thực hành cá nhân nằm trong [`docs/practical_exercises.md`](../docs/practical_exercises.md). Các số liệu kỹ thuật của Tú đã được đối chiếu; phần thực hành và vấn đáp cá nhân chưa được người khác chứng kiến độc lập.
 - AI hỗ trợ soạn mã, cấu trúc báo cáo và nội dung ôn tập. Nhóm cần kiểm tra lại kết quả, hiểu từng bước và tự thực hành trước khi nộp.
-

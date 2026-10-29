@@ -104,4 +104,3 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Ghi nhận sau khi tự làm
 
 Tú đã gửi báo cáo tự xác nhận ngày 2026-10-29; các mục chi tiết được ghi trong [`docs/contributions.md`](contributions.md). Tài vẫn cần tự ghi ngày, bài đã làm, kết quả mình giải thích được, bằng chứng và xác nhận của chính mình. Các ô “Tôi đã tự làm” dưới từng bài vẫn là checklist cá nhân cho người đọc; không tick thay cho thành viên khác. Việc đối chiếu số liệu không phải là quan sát độc lập phần thực hành hoặc vấn đáp.
-

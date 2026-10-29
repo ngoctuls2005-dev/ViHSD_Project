@@ -110,4 +110,3 @@ Các phần này thuộc phân công chính của Tài; Tú được yêu cầu 
 - Codex đối chiếu độc lập các số liệu chính với dữ liệu thật và chạy lại bộ kiểm thử tích hợp: 25 đạt. Việc này xác nhận kết quả kỹ thuật có thể tái lập, không chứng minh độc lập người thực hiện hoặc chất lượng trả lời miệng.
 - Nhật ký [`contributions.md`](contributions.md) ghi rõ phần tự xác nhận của Tú, phần được đối chiếu kỹ thuật và giới hạn chứng cứ. Chưa có người quan sát độc lập hoặc xác nhận của giảng viên về vấn đáp/thực hành tại chỗ.
 - Tài chưa gửi báo cáo hoàn thành.
-

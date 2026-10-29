@@ -1,40 +1,59 @@
-# Nguồn và cách truy cập ViHSD
+# Nguồn, điều kiện truy cập và cách tái tạo ViHSD
 
-## Nguồn được kiểm tra
+## Nguồn và điều kiện
 
-- [Thẻ bộ dữ liệu `uitnlp/vihsd`](https://huggingface.co/datasets/uitnlp/vihsd) mô tả ViHSD là dữ liệu phân loại văn bản tiếng Việt, khoảng 33 nghìn bình luận, ba nhãn `HATE`, `OFFENSIVE`, `CLEAN`, định dạng CSV và các split `train`, `validation`, `test`.
-- Trang Hugging Face hiển thị metadata license `MIT`, đồng thời yêu cầu người dùng đăng nhập/chấp thuận điều kiện và chia sẻ thông tin tài khoản để truy cập nội dung.
-- [README của nhóm tác giả](https://github.com/sonlam1102/vihsd) ghi 33.400 bình luận, hướng dẫn liên hệ tác giả để lấy dữ liệu và nêu dữ liệu chỉ dùng cho nghiên cứu.
+- Nguồn được dùng: [bộ dữ liệu chính thức `uitnlp/vihsd` trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd).
+- Tác giả mô tả ViHSD là 33.400 bình luận tiếng Việt gán một trong ba lớp `CLEAN`, `OFFENSIVE`, `HATE`; bài báo gốc là Luu, Nguyen và Nguyen (2021), [arXiv:2103.11528](https://arxiv.org/abs/2103.11528).
+- Trang Hugging Face yêu cầu đăng nhập, chấp thuận điều kiện truy cập và chia sẻ thông tin tài khoản Hugging Face. Chủ tài khoản đã chấp thuận và xác thực trong môi trường cục bộ. Không lưu hoặc chia sẻ token.
+- Thẻ Hugging Face hiện ghi metadata giấy phép MIT; README của nhóm tác giả ghi dữ liệu chỉ dùng cho mục đích nghiên cứu. Phạm vi hai ghi chú này chưa được làm rõ. Nhóm chỉ dùng dữ liệu trong bài tập/nghiên cứu cục bộ, không đưa bình luận, tệp dữ liệu, hay bản dẫn xuất có thể khôi phục bình luận lên GitHub.
 
-## Trích dẫn bài báo
+## Schema đã đọc từ dữ liệu thật
 
-Luu, Son T.; Nguyen, Kiet Van; Nguyen, Ngan Luu-Thuy. (2021). “A Large-scale Dataset for Hate Speech Detection on Vietnamese Social Media Texts.” *IEA/AIE 2021*, tr. 415–426. [arXiv:2103.11528](https://arxiv.org/abs/2103.11528), [DOI nhà xuất bản](https://doi.org/10.1007/978-3-030-79457-6_35).
+| Cột | Kiểu | Ý nghĩa |
+|---|---|---|
+| `free_text` | `string` | Nội dung bình luận gốc |
+| `label_id` | `int64` | Mã lớp gốc; các mã quan sát được là 0, 1, 2 |
 
-Hai ghi chú về quyền sử dụng có thể áp dụng cho các phần khác nhau của kho hoặc dataset. Nhóm chưa xác minh được phạm vi áp dụng, nên không tải bằng tài khoản của người khác, không đăng lại dữ liệu và không công khai bình luận. Nếu cần chia sẻ dữ liệu hoặc đưa bình luận vào đầu ra, cần đọc điều kiện được chấp thuận và xin xác nhận từ chủ sở hữu dữ liệu.
+Ánh xạ dùng trong báo cáo là `0 = CLEAN`, `1 = OFFENSIVE`, `2 = HATE`, phù hợp với thứ tự ba lớp trong tài liệu tác giả và cách gắn nhãn của các bản xem mẫu cùng nguồn. Dataset lưu nhãn dưới dạng số nguyên, không khai báo `ClassLabel`; vì vậy mã nguồn giữ nguyên `label_id` và chỉ thêm tên lớp cho bảng phân tích.
 
-## Khả năng tái tạo khi đã được cấp quyền
+| Tập chính thức | Số dòng |
+|---|---:|
+| Train | 24.048 |
+| Validation | 2.672 |
+| Test | 6.680 |
+| **Tổng** | **33.400** |
 
-Thẻ Hugging Face hướng dẫn dùng thư viện `datasets` với các split dưới đây. Đây là hướng dẫn để người dùng có quyền thực hiện; lệnh chưa chạy trong môi trường dự án vì phiên này chưa chấp thuận điều kiện truy cập.
+Các con số khớp với số lượng và ba split trong bài báo/README tác giả. Lần kiểm tra dữ liệu ghi nhận revision Hugging Face `88e81b36ca376867640dad9df295e0f7d499ab80` (cập nhật kho: 2025-04-06). Hãy ghi revision mới nếu tải lại sau khi nguồn thay đổi.
+
+## Tải, lưu cục bộ và chạy lại
+
+Cài thư viện trong PowerShell:
+
+```powershell
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-data.txt
+```
+
+Đăng nhập Hugging Face bằng `hf auth login` nếu máy chưa có phiên được cấp quyền. Nhập token trực tiếp vào lời nhắc của lệnh; không đưa token vào mã, tệp cấu hình dự án, hay hội thoại.
+
+Tải dữ liệu và lưu định dạng Hugging Face vào vùng cục bộ bị Git bỏ qua:
 
 ```python
 from datasets import load_dataset
 
-train = load_dataset("sonlam1102/vihsd", split="train")
-validation = load_dataset("sonlam1102/vihsd", split="validation")
-test = load_dataset("sonlam1102/vihsd", split="test")
+dataset = load_dataset(
+    "uitnlp/vihsd",
+    revision="88e81b36ca376867640dad9df295e0f7d499ab80",
+)
+dataset.save_to_disk("data/raw/uitnlp_vihsd")
 ```
 
-Sau khi có quyền truy cập:
+Trong dự án, `python scripts/run_real_dataset_analysis.py` đọc bản cục bộ nếu đã có; nếu chưa có thì truy vấn revision hiện hành, tải đúng `uitnlp/vihsd`, và lưu bản gốc vào `data/raw/uitnlp_vihsd/`. Script kiểm tra split, tên cột, kiểu dữ liệu, số dòng và tập mã nhãn trước khi phân tích. Bảng tổng hợp cục bộ được ghi vào `artifacts/real_vihsd/`; hai biểu đồ không chứa văn bản được ghi vào `reports/figures/`.
 
-1. Ghi lại revision/phiên bản bộ dữ liệu mà thư viện báo về.
-2. Kiểm tra các trường và kiểu dữ liệu trực tiếp; không mặc định tên cột hoặc kiểu mã hóa nhãn.
-3. Lưu dữ liệu chỉ trong thư mục `data/raw/` cục bộ, bị Git bỏ qua.
-4. Đối chiếu số dòng giữa từng split và nguồn; ghi checksum nếu xuất file CSV.
-5. Truyền tên cột đã xác minh cho `scripts/run_eda.py`.
-6. Không đưa file dữ liệu hay ví dụ bình luận thật vào repository công khai.
+Không đổi nhãn, không chia lại ba split chính thức và không ghi đè dữ liệu đầu vào. Dữ liệu gốc và bảng đối chiếu văn bản phải tiếp tục nằm ngoài Git.
 
-Cài thêm thư viện tải dataset nếu cần: `python -m pip install -r requirements-data.txt`.
+## Cách diễn giải nhãn và giới hạn
 
-## Trạng thái hiện tại
+Các lớp mô tả mức độ nội dung: CLEAN là nội dung không bị gán là xúc phạm/thù ghét; OFFENSIVE là ngôn từ xúc phạm; HATE là ngôn từ thù ghét. Ranh giới này phụ thuộc ngữ cảnh và hướng dẫn gán nhãn; không nên coi các từ đơn lẻ là bằng chứng tuyệt đối của nhãn.
 
-Chưa chấp thuận điều kiện Hugging Face và chưa đọc được nội dung dữ liệu trong phiên này. Vì vậy chưa xác minh được schema thực tế, số mẫu theo split/lớp, mã hóa nhãn, checksum hoặc quyền tái phân phối. Các bộ dữ liệu nhỏ trong unit test chỉ dùng để kiểm tra kỹ thuật; chúng không phải ViHSD và không tạo kết quả nghiên cứu.
+Hai ghi chú giấy phép/điều kiện sử dụng nêu trên chưa được giải quyết về mặt pháp lý. Do đó, không chia sẻ lại bình luận, không đưa ví dụ nguyên văn vào báo cáo công khai, và không đẩy dữ liệu hoặc output notebook có thể chứa văn bản thật lên repository.

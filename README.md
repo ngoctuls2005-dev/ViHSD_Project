@@ -1,76 +1,57 @@
 # ViHSD: Phát hiện ngôn từ thù ghét và xúc phạm
 
-Dự án môn Học máy nghiên cứu phân loại bình luận mạng xã hội tiếng Việt thành ba nhãn: `CLEAN` (sạch), `OFFENSIVE` (xúc phạm) và `HATE` (thù ghét), sử dụng bộ dữ liệu ViHSD của UIT sau khi kiểm chứng cấu trúc và điều kiện sử dụng.
+Dự án môn Học máy nghiên cứu phân loại bình luận mạng xã hội tiếng Việt thành `CLEAN`, `OFFENSIVE` và `HATE` bằng bộ dữ liệu ViHSD của UIT.
 
-## Phạm vi hiện tại
+## Trạng thái
 
-Mốc đang thực hiện là **Bài kiểm tra 1 – tuần 4**. Trước tiên, nhóm xác định bài toán, khảo sát dữ liệu, xử lý chất lượng dữ liệu và chuẩn bị đặc trưng. Chưa huấn luyện mô hình cho đến khi hoàn tất các tiêu chí của Bài kiểm tra 1. Không có kết quả thực nghiệm hay thống kê dữ liệu nào được công bố trong tài liệu khởi tạo này.
+Đang hoàn thành Bài kiểm tra 1 – tuần 4. Dữ liệu thật đã được tải và xác minh ở revision `88e81b36ca376867640dad9df295e0f7d499ab80`: 24.048 Train, 2.672 Validation và 6.680 Test. Báo cáo có thống kê, biểu đồ, kiểm tra chất lượng và TF-IDF thật. **Chưa huấn luyện mô hình**, đúng phạm vi bài kiểm tra. Kết quả chi tiết và các hạn chế nằm trong [báo cáo](reports/exam1_report.md) và [nhật ký tiến độ](docs/PROGRESS.md).
 
-## Bài toán
+Nguồn chính thức là [`uitnlp/vihsd` trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd). Cần đăng nhập và chấp thuận điều kiện truy cập. Hugging Face ghi metadata MIT; README tác giả nói dữ liệu chỉ dùng cho nghiên cứu. Vì phạm vi hai ghi chú chưa được làm rõ, dữ liệu và bình luận gốc không được đưa lên GitHub.
 
-- Loại bài toán: phân loại văn bản đa lớp có giám sát.
-- Một mẫu: một bình luận.
-- Đầu vào: nội dung bình luận tiếng Việt.
-- Đầu ra: một trong ba nhãn `CLEAN`, `OFFENSIVE`, `HATE`.
-- Chỉ số chính dự kiến: F1 Macro, nhằm xem xét công bằng hiệu quả trên cả lớp ít mẫu.
+## Cài đặt và tải/phân tích dữ liệu thật
 
-Diễn giải nhãn và tên cột sẽ được đối chiếu với tài liệu, mã hóa nhãn và dữ liệu thực tế trước khi phân tích. Nhóm không sửa nhãn gốc hoặc tạo dữ liệu giả để thay cho ViHSD.
-
-## Nguồn dữ liệu
-
-- [ViHSD trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd)
-- [Mã nguồn ViHSD của nhóm tác giả](https://github.com/sonlam1102/vihsd)
-
-Thẻ Hugging Face mô tả khoảng 33 nghìn bình luận và có các tập `train`, `validation`, `test`, nhưng yêu cầu chấp thuận điều kiện và chia sẻ thông tin tài khoản để xem tệp. Trang này ghi metadata giấy phép MIT; README của nhóm tác giả lại ghi dữ liệu chỉ dùng cho nghiên cứu. Phạm vi quyền sử dụng/tái phân phối vì vậy cần được làm rõ. Không đưa dữ liệu gốc hay bình luận thật vào repository công khai khi chưa xác nhận quyền.
-
-## Tài liệu
-
-- [Phát biểu bài toán](docs/problem_statement.md)
-- [Nguồn và cách truy cập dữ liệu](docs/data_access.md)
-- [Quy tắc tiền xử lý](docs/preprocessing.md)
-- [Chia tập và TF-IDF](docs/vectorization.md)
-- [Câu hỏi gợi ý vấn đáp](docs/viva_questions.md)
-- [Giải thích cách đánh giá](docs/evaluation_guide.md)
-- [Kế hoạch và nhật ký tiến độ](docs/PROGRESS.md)
-- [Báo cáo Bài kiểm tra 1](reports/exam1_report.md)
-
-## Các giai đoạn
-
-1. Khởi tạo dự án và tài liệu bài toán.
-2. Khảo sát, thống kê và phân tích dữ liệu thực tế.
-3. Phát hiện và xử lý vấn đề chất lượng dữ liệu.
-4. Chuẩn bị dữ liệu và TF-IDF, kiểm soát rò rỉ dữ liệu.
-5. Hoàn thiện báo cáo, kiểm thử và chuẩn bị vấn đáp.
-
-Xem `docs/PROGRESS.md` để biết đầu ra, tiêu chí hoàn thành và trạng thái từng giai đoạn. Hướng dẫn cài đặt môi trường và chạy EDA cơ bản nằm bên dưới.
-
-Notebook thực hành: `notebooks/exam1_practice.ipynb`. Mặc định notebook dùng fixture nhỏ, được ghi rõ là minh họa và không phải ViHSD.
-
-
-## Môi trường phát triển
-
-Yêu cầu Python 3.10 trở lên. Trên Windows PowerShell, tạo môi trường và cài thư viện:
+Yêu cầu Python 3.10 trở lên. Trên Windows PowerShell:
 
 ```powershell
 py -3 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -e .
+python -m pip install -r requirements-data.txt
 ```
 
-PyVi được dùng để tách từ tiếng Việt trong bước tạo TF-IDF; nếu chỉ chạy EDA và unit test độc lập, các phần này không cần gọi tokenizer.
-
-Sau khi có quyền truy cập dữ liệu, hãy lưu CSV cục bộ trong `data/raw/` (thư mục này bị Git bỏ qua), kiểm tra tên cột trong tệp thật, rồi chạy EDA với đúng tên cột đã xác minh:
+Nếu chưa xác thực Hugging Face, chạy `hf auth login` và nhập token trực tiếp tại lời nhắc cục bộ; không gửi token qua hội thoại hoặc lưu token trong dự án. Sau đó chạy:
 
 ```powershell
-python scripts/run_eda.py --input "data/raw/<tep_csv>" --text-column "<cot_van_ban>" --label-column "<cot_nhan>"
+python scripts/run_real_dataset_analysis.py
 ```
 
-Thay phần trong dấu `<...>` bằng đường dẫn và tên cột thực tế; lệnh không mặc định schema. Kết quả được ghi vào `artifacts/eda/`, thư mục cục bộ bị Git bỏ qua. Không chia sẻ thư mục đó trước khi rà soát từ/cụm từ trích xuất để tránh công khai nội dung nhạy cảm.
+Lệnh tải `uitnlp/vihsd` nếu chưa có bản cục bộ, lưu split gốc vào `data/raw/uitnlp_vihsd/`, tạo các bảng tổng hợp cục bộ trong `artifacts/real_vihsd/`, và sinh hai biểu đồ an toàn trong `reports/figures/`. Hai thư mục dữ liệu/đầu ra cục bộ bị Git bỏ qua. Xem [hướng dẫn tải và điều kiện truy cập](docs/data_access.md).
 
-Để kiểm tra chất lượng và giao nhau giữa các split, chạy `scripts/audit_quality.py` với các cột và nhãn đã xác minh. Mỗi split cần được khai báo bằng `--split "ten=data/raw/tep.csv"`; lặp lại tùy số split và khai báo từng lớp bằng `--allowed-label`:
+Notebook [`notebooks/exam1_practice.ipynb`](notebooks/exam1_practice.ipynb) mặc định đọc dữ liệu thật ở `data/raw/uitnlp_vihsd/` (hoặc tải nếu chưa có). Notebook chỉ hiển thị thống kê tổng hợp, không in bình luận. Chế độ fixture kỹ thuật có thể bật bằng biến `VIHSD_NOTEBOOK_USE_FIXTURE=1`; kết quả fixture không phải kết quả nghiên cứu.
+
+## Kiểm thử
+
+Chạy unit test:
 
 ```powershell
-python scripts/audit_quality.py --split "train=data/raw/train.csv" --split "test=data/raw/test.csv" --text-column "<cot_van_ban>" --label-column "<cot_nhan>" --allowed-label CLEAN --allowed-label OFFENSIVE --allowed-label HATE
+python -m unittest discover -s tests -v
 ```
 
-Các tên tệp/cột trên là tham số cần thay bằng thông tin đã xác minh trong dữ liệu thật. Kết quả ghi vào `artifacts/quality/` và không chứa bình luận gốc.
+Kiểm thử tích hợp dữ liệu thật được bật riêng, cần phiên Hugging Face có quyền:
+
+```powershell
+$env:VIHSD_RUN_INTEGRATION = "1"
+python -m unittest discover -s tests -v
+```
+
+Không huấn luyện mô hình ở giai đoạn này. Không công khai `data/raw/`, các bảng chứa từ/cụm từ trích từ bình luận, hay notebook có output bình luận thật.
+
+## Tài liệu dự án
+
+- [Báo cáo Bài kiểm tra 1](reports/exam1_report.md)
+- [Nguồn, quyền truy cập và tái tạo dữ liệu](docs/data_access.md)
+- [Giải thích phương pháp đánh giá](docs/evaluation_guide.md)
+- [Quy tắc tiền xử lý](docs/preprocessing.md)
+- [Chia tập và TF-IDF](docs/vectorization.md)
+- [Câu hỏi vấn đáp và thực hành](docs/viva_questions.md)
+- [Kế hoạch và nhật ký tiến độ](docs/PROGRESS.md)

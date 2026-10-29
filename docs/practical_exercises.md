@@ -5,7 +5,7 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Bài 1 – Tính baseline F1 Macro
 
 - **Phụ trách chính:** Hoàng Ngọc Tú. **Tự học chéo:** Lê Quang Tài.
-- **Trạng thái cá nhân:** Chưa xác nhận hoàn thành.
+- **Trạng thái cá nhân:** Tú tự báo cáo đã hoàn thành ngày 2026-10-29; phép tính đã được đối chiếu. Tài chưa xác nhận.
 - **Mục đích:** Hiểu ảnh hưởng của mất cân bằng lớp và phân biệt mức tham chiếu lý thuyết với kết quả mô hình.
 - **Yêu cầu:** Tự tính Macro F1 nếu luôn dự đoán CLEAN, chỉ dùng phân bố Train.
 - **Các bước:**
@@ -22,7 +22,7 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Bài 2 – Kiểm toán trùng Train–Test
 
 - **Phụ trách chính:** Lê Quang Tài. **Tự học chéo:** Hoàng Ngọc Tú.
-- **Trạng thái cá nhân:** Chưa xác nhận hoàn thành.
+- **Trạng thái cá nhân:** Tú tự báo cáo đã hoàn thành phần học chéo ngày 2026-10-29; số liệu đã được đối chiếu. Tài chưa xác nhận.
 - **Mục đích:** Hiểu vì sao cùng một văn bản ở Train và Test có thể làm đánh giá lạc quan, và vì sao khác nhãn cũng cần được báo cáo.
 - **Yêu cầu:** Tạo lại bảng tổng hợp giao nhau trước/sau chuẩn hóa; không mở hay xuất văn bản bình luận.
 - **Tệp cần mở:** `scripts/run_real_dataset_analysis.py`; kết quả tổng hợp cục bộ `artifacts/real_vihsd/train_test_duplicate_audit.csv`; phần 6 trong báo cáo.
@@ -45,7 +45,7 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Bài 3 – Đề xuất đánh giá bổ sung cho Bài kiểm tra 2
 
 - **Phụ trách chính:** Hoàng Ngọc Tú. **Tự học chéo:** Lê Quang Tài.
-- **Trạng thái cá nhân:** Chưa xác nhận hoàn thành.
+- **Trạng thái cá nhân:** Tú tự báo cáo đã hoàn thành ngày 2026-10-29; thiết kế và số liệu đã được đối chiếu. Tài chưa xác nhận.
 - **Mục đích:** Đề xuất cách đo ảnh hưởng của nội dung lặp mà vẫn giữ kết quả trên Test chính thức.
 - **Yêu cầu:** Trình bày quy trình bổ sung, chưa chạy mô hình.
 - **Tệp cần mở:** Mục “Phương án đánh giá bổ sung cho Bài kiểm tra 2” trong phần 6 của [`reports/exam1_report.md`](../reports/exam1_report.md), cùng `docs/evaluation_guide.md`.
@@ -63,7 +63,7 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Bài 4 – PyVi và TF-IDF
 
 - **Phụ trách chính:** Lê Quang Tài. **Tự học chéo:** Hoàng Ngọc Tú.
-- **Trạng thái cá nhân:** Chưa xác nhận hoàn thành.
+- **Trạng thái cá nhân:** Tú tự báo cáo đã hoàn thành phần học chéo ngày 2026-10-29; cách fit/transform và số chiều đã được đối chiếu. Tài chưa xác nhận.
 - **Mục đích:** Xác định nơi văn bản được tách từ, nơi TF-IDF được fit và kích thước biểu diễn.
 - **Yêu cầu:** Giải thích mã và đọc bảng kích thước, không huấn luyện bộ phân loại.
 - **Tệp cần mở:** `src/vihsd/preparation.py`, cell cuối “5. Chuẩn bị TF-IDF” của `notebooks/exam1_practice.ipynb`, và `artifacts/real_vihsd/tfidf_dimensions.csv` sau khi chạy script.
@@ -80,7 +80,7 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 ## Bài 5 – Thử quy tắc chuẩn hóa trên bản sao
 
 - **Phụ trách chính:** Lê Quang Tài. **Tự học chéo:** Hoàng Ngọc Tú.
-- **Trạng thái cá nhân:** Chưa xác nhận hoàn thành.
+- **Trạng thái cá nhân:** Tú tự báo cáo đã hoàn thành phần học chéo ngày 2026-10-29; số liệu tổng hợp đã được đối chiếu. Tài chưa xác nhận.
 - **Mục đích:** Đo tác động của một quy tắc mà không ghi đè văn bản nguồn.
 - **Yêu cầu:** Dùng một bản sao Series, tính tóm tắt trước/sau và giải thích giới hạn.
 - **Tệp cần mở:** `src/vihsd/preprocessing.py`, cell “4. Chuẩn hóa có kiểm soát” trong notebook và `docs/preprocessing.md`.
@@ -103,4 +103,5 @@ Các con số bên dưới đã được xác minh trên ViHSD thật revision `
 
 ## Ghi nhận sau khi tự làm
 
-Mỗi người ghi ngày, bài đã tự làm, kết quả mình giải thích được, bằng chứng và xác nhận của chính mình trong [`docs/contributions.md`](contributions.md). Không tick ô thay cho thành viên khác; các ô hiện tại đều chưa được xác nhận.
+Tú đã gửi báo cáo tự xác nhận ngày 2026-10-29; các mục chi tiết được ghi trong [`docs/contributions.md`](contributions.md). Tài vẫn cần tự ghi ngày, bài đã làm, kết quả mình giải thích được, bằng chứng và xác nhận của chính mình. Các ô “Tôi đã tự làm” dưới từng bài vẫn là checklist cá nhân cho người đọc; không tick thay cho thành viên khác. Việc đối chiếu số liệu không phải là quan sát độc lập phần thực hành hoặc vấn đáp.
+

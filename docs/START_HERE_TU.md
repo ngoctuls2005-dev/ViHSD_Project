@@ -1,6 +1,6 @@
 # Bắt đầu tại đây – Hoàng Ngọc Tú
 
-Tài liệu này là lộ trình để Tú tự làm và giải thích phần được giao. Việc dự án đã có số liệu không có nghĩa Tú đã tự thực hành. Trạng thái cá nhân hiện là **Chưa xác nhận hoàn thành**. Làm tại bản sao cục bộ; không huấn luyện mô hình và không đưa bình luận thật hoặc dữ liệu gốc lên GitHub.
+Tú đã gửi báo cáo tự xác nhận hoàn thành lộ trình ngày **2026-10-29**. Các số liệu kỹ thuật chính đã được đối chiếu với dữ liệu ViHSD thật; phần tự thao tác và vấn đáp không được ghi nhận như quan sát độc lập. Checklist dưới đây phản ánh báo cáo của Tú. Không huấn luyện mô hình hoặc đưa bình luận thật, dữ liệu gốc hay token lên GitHub.
 
 ## 1. Mở dự án bằng VS Code
 
@@ -120,10 +120,11 @@ Mở [`docs/viva_questions.md`](viva_questions.md) và tự trả lời các câ
 
 ## 10. Ghi minh chứng đã tự thực hành
 
-Sau khi thật sự hoàn thành, tự cập nhật mục **Hoàng Ngọc Tú** trong [`docs/contributions.md`](contributions.md): ngày, bài/tiêu chí, thao tác đã làm, kết quả tự giải thích, bằng chứng và xác nhận của Tú. Chỉ chia sẻ ảnh chụp không có bình luận thật, đường dẫn riêng tư hoặc thông tin tài khoản. Không đánh dấu thay cho Tài.
+- Tú đã gửi phần tự xác nhận và kết quả chi tiết; nhật ký [`docs/contributions.md`](contributions.md) được đồng bộ theo báo cáo ngày 2026-10-29. Nếu có chi tiết nào chưa chính xác, Tú cần tự sửa phần của mình. Không đánh dấu thay cho Tài.
 
-- [ ] Đã mở dự án và chọn đúng môi trường/kernel.
-- [ ] Đã chạy Notebook từ đầu trên ViHSD thật.
-- [ ] Đã tự làm bài chính 1 và 3.
-- [ ] Đã tự làm phần học chéo 2, 4 và 5.
-- [ ] Đã tự trả lời vấn đáp và cập nhật nhật ký của mình.
+- [x] Đã mở dự án và chọn đúng môi trường/kernel (Tú tự báo cáo).
+- [x] Đã chạy Notebook từ đầu trên ViHSD thật (Tú tự báo cáo; nội dung kỹ thuật đã đối chiếu).
+- [x] Đã tự làm bài chính 1 và 3 (Tú tự báo cáo).
+- [x] Đã tự làm phần học chéo 2, 4 và 5 (Tú tự báo cáo; số liệu kỹ thuật đã đối chiếu).
+- [x] Đã tự trả lời vấn đáp và cập nhật nhật ký của mình (Tú tự báo cáo; chưa có người chứng kiến độc lập).
+

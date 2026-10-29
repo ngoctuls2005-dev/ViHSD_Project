@@ -192,8 +192,8 @@ F1 Macro là chỉ số chính vì ba lớp có tỷ lệ rất khác nhau. Cầ
 | 6. Chất lượng dữ liệu | Đã định lượng thiếu, trùng, xung đột nhãn, ngoại lệ, sai định dạng, mất cân bằng và giao split. |
 | 7. Xử lý chất lượng | Có lý do, giới hạn và so sánh trước/sau; dữ liệu/nhãn gốc không đổi. |
 | 8. Chuẩn bị dữ liệu | PyVi/TF-IDF thật chạy trên split chính thức; fit chỉ trên Train. Rủi ro giao split được nêu. |
-| 9. Lý giải phương pháp/chỉ số [CN] | Tài liệu hướng dẫn và baseline có sẵn; mỗi sinh viên vẫn cần tự giải thích. |
-| 10. Vấn đáp/thực hành [CN] | Notebook và năm bài tập đã chuẩn bị; mỗi sinh viên vẫn cần tự thao tác và ghi nhận. |
+| 9. Lý giải phương pháp/chỉ số [CN] | Có tài liệu và baseline. Tú tự báo cáo đã trả lời 8 câu vấn đáp ngày 2026-10-29; chưa có quan sát độc lập. Tài chưa xác nhận. |
+| 10. Vấn đáp/thực hành [CN] | Tú tự báo cáo đã chạy Notebook thật và làm bài 1–5; phần thực hành/vấn đáp tại chỗ chưa được chứng kiến độc lập. Tài chưa xác nhận. |
 
 Điểm do giảng viên đánh giá. Bằng chứng kiểm thử và các giới hạn còn lại được ghi trong [`docs/PROGRESS.md`](../docs/PROGRESS.md).
 
@@ -203,6 +203,7 @@ F1 Macro là chỉ số chính vì ba lớp có tỷ lệ rất khác nhau. Cầ
 - Có văn bản trùng trong cùng split và giữa các split; 792 chuỗi duy nhất trùng Train–Test theo quy tắc dò đã nêu.
 - Có hai giá trị văn bản thiếu trong Train; ngoại lệ độ dài và cách viết bất thường được thống kê nhưng chưa loại bỏ.
 - Metadata giấy phép MIT và ghi chú “chỉ dùng cho nghiên cứu” của tác giả chưa được đối chiếu pháp lý; dữ liệu được giữ riêng, báo cáo công khai không chứa bình luận nguyên văn.
-- Phân công cá nhân chưa được xác nhận. Nhật ký được để trống theo từng thành viên trong [`docs/contributions.md`](../docs/contributions.md); không suy diễn ai đã thực hiện phần nào từ danh tính commit.
-- Năm bài thực hành cá nhân nằm trong [`docs/practical_exercises.md`](../docs/practical_exercises.md); việc hoàn thành cần được từng sinh viên ghi lại thật.
+- Tú đã gửi báo cáo tự xác nhận ngày 2026-10-29; các thao tác cá nhân được gắn nhãn tự báo cáo trong [`docs/contributions.md`](../docs/contributions.md), không suy diễn từ danh tính commit. Tài chưa xác nhận.
+- Năm bài thực hành cá nhân nằm trong [`docs/practical_exercises.md`](../docs/practical_exercises.md). Các số liệu kỹ thuật của Tú đã được đối chiếu; phần thực hành và vấn đáp cá nhân chưa được người khác chứng kiến độc lập.
 - AI hỗ trợ soạn mã, cấu trúc báo cáo và nội dung ôn tập. Nhóm cần kiểm tra lại kết quả, hiểu từng bước và tự thực hành trước khi nộp.
+

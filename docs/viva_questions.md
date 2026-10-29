@@ -10,11 +10,13 @@ Các gợi ý này dựa trên dữ liệu thật ở revision `88e81b36ca376867
 2. **Vì sao dùng F1 Macro thay vì chỉ Accuracy?**
    Trong Train, CLEAN là 82,69%, OFFENSIVE 6,68%, HATE 10,63%; tỷ lệ CLEAN/OFFENSIVE là 12,38. Accuracy đơn lẻ có thể che khuất việc bỏ sót lớp ít mẫu. F1 Macro tính F1 của từng lớp với trọng số ngang nhau; cần báo cáo thêm chỉ số từng lớp.
 
+   Nếu luôn dự đoán CLEAN thì Precision CLEAN là 0,8269, Recall là 1, F1 CLEAN là 0,9053, F1 hai lớp còn lại là 0; Macro F1 lý thuyết là 0,3018 ≈ 0,302. Đây là phép tính từ tần suất Train, không phải kết quả mô hình.
+
 3. **Điều gì khác nhau về độ dài giữa các lớp?**
    Trung vị ký tự của HATE là 59, còn CLEAN và OFFENSIVE là 31. Đây là xu hướng mô tả, không phải quy tắc nhãn; cần tránh kết luận một câu dài là HATE.
 
 4. **Vì sao giữ split chính thức? Có vấn đề gì cần lưu ý?**
-   Không tự chia lại khi nguồn cung cấp Train/Validation/Test. Tuy nhiên, 792 chuỗi chuẩn hóa trùng nhau giữa Train và Test; chuẩn hóa từ viết tắt làm con số này thành 797. Đây là nguy cơ làm đánh giá sau này lạc quan và phải được phân tích, không được bỏ qua.
+   Không tự chia lại khi nguồn cung cấp Train/Validation/Test. Trước/sau chuẩn hóa có 792/797 chuỗi giao; các dòng bị ảnh hưởng là 857/867 ở Train và 809/814 ở Test. Có 80 chuỗi xung đột nhãn và 96 cặp dòng khác nhãn ở cả hai phép đo. Đây là nguy cơ làm đánh giá sau này lạc quan và phải được phân tích, không được bỏ qua.
 
 5. **Vectorizer được học từ tập nào?**
    PyVi tách từ; TF-IDF từ dùng n-gram (1,2), TF-IDF ký tự dùng (2,5). Hai vectorizer chỉ fit trên Train; Validation và Test chỉ transform. Kích thước là 166.981 đặc trưng từ cộng 393.272 đặc trưng ký tự, tổng 560.253.
@@ -35,3 +37,5 @@ Các gợi ý này dựa trên dữ liệu thật ở revision `88e81b36ca376867
 - Tính lại trùng Train–Test, giải thích cách chuẩn hóa dò trùng và vì sao không xóa tự động.
 - In số mẫu và kích thước ma trận ba split; chỉ rõ lệnh nào fit và lệnh nào transform.
 - Vẽ lại một biểu đồ với nhãn trục/tiêu đề phù hợp và đưa ra một nhận xét được số liệu hỗ trợ.
+
+Năm bài thực hành có yêu cầu, hướng dẫn thao tác và cách giải thích nằm trong [`docs/practical_exercises.md`](practical_exercises.md). Từng thành viên tự ghi kết quả đã làm vào [`docs/contributions.md`](contributions.md); các mục để trống chưa phải minh chứng đã hoàn thành.

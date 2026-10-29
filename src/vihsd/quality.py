@@ -1,9 +1,10 @@
 """Phat hien van de chat luong ma khong xuat mau binh luan that."""
 
+from collections import Counter, defaultdict
 from itertools import combinations
 import re
 import unicodedata
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 import pandas as pd
 
@@ -168,3 +169,92 @@ def cross_split_duplicate_summary(
             }
         )
     return pd.DataFrame(rows)
+
+
+def cross_split_duplicate_audit(
+    frame_a: pd.DataFrame,
+    frame_b: pd.DataFrame,
+    text_column: str,
+    label_column: str,
+    label_names: Mapping[Any, str],
+    stage: str,
+    split_a_name: str = "train",
+    split_b_name: str = "test",
+    text_transform: Callable[[Any], Any] | None = None,
+) -> pd.DataFrame:
+    """Tong hop so dong va xung dot nhan cua cac van ban giao nhau."""
+    validate_schema(frame_a, text_column, label_column)
+    validate_schema(frame_b, text_column, label_column)
+
+    def group_rows(frame: pd.DataFrame) -> dict[str, Counter[Any]]:
+        groups: dict[str, Counter[Any]] = defaultdict(Counter)
+        for text, label in zip(frame[text_column], frame[label_column]):
+            transformed = text_transform(text) if text_transform is not None else text
+            key = normalize_for_duplicate_check(transformed)
+            if not key:
+                continue
+            label_key = "<missing>" if pd.isna(label) else label
+            groups[key][label_key] += 1
+        return groups
+
+    groups_a = group_rows(frame_a)
+    groups_b = group_rows(frame_b)
+    shared_keys = set(groups_a) & set(groups_b)
+    conflicting_keys = {
+        key
+        for key in shared_keys
+        if any(label_a != label_b for label_a in groups_a[key] for label_b in groups_b[key])
+    }
+
+    row: dict[str, Any] = {
+        "stage": stage,
+        "split_a": split_a_name,
+        "split_b": split_b_name,
+        "shared_unique_texts": len(shared_keys),
+        "split_a_rows_affected": sum(sum(groups_a[key].values()) for key in shared_keys),
+        "split_b_rows_affected": sum(sum(groups_b[key].values()) for key in shared_keys),
+        "conflicting_unique_texts": len(conflicting_keys),
+        "differing_label_row_pairs": sum(
+            groups_a[key][label_a] * groups_b[key][label_b]
+            for key in shared_keys
+            for label_a in groups_a[key]
+            for label_b in groups_b[key]
+            if label_a != label_b
+        ),
+        "split_a_rows_in_conflicting_groups": sum(
+            sum(groups_a[key].values()) for key in conflicting_keys
+        ),
+        "split_b_rows_in_conflicting_groups": sum(
+            sum(groups_b[key].values()) for key in conflicting_keys
+        ),
+    }
+    rows_a_by_label: Counter[Any] = Counter()
+    rows_b_by_label: Counter[Any] = Counter()
+    conflict_a_by_label: Counter[Any] = Counter()
+    conflict_b_by_label: Counter[Any] = Counter()
+    for key in shared_keys:
+        rows_a_by_label.update(groups_a[key])
+        rows_b_by_label.update(groups_b[key])
+    for key in conflicting_keys:
+        conflict_a_by_label.update(groups_a[key])
+        conflict_b_by_label.update(groups_b[key])
+    for label, name in label_names.items():
+        row[f"{split_a_name}_rows_{name}"] = rows_a_by_label[label]
+        row[f"{split_b_name}_rows_{name}"] = rows_b_by_label[label]
+        row[f"{split_a_name}_conflict_group_rows_{name}"] = conflict_a_by_label[label]
+        row[f"{split_b_name}_conflict_group_rows_{name}"] = conflict_b_by_label[label]
+    for label_a, name_a in label_names.items():
+        for label_b, name_b in label_names.items():
+            if label_a == label_b:
+                continue
+            direction = f"{name_a}_to_{name_b}"
+            row[f"conflicting_texts_{direction}"] = sum(
+                1
+                for key in shared_keys
+                if groups_a[key][label_a] and groups_b[key][label_b]
+            )
+            row[f"differing_label_pairs_{direction}"] = sum(
+                groups_a[key][label_a] * groups_b[key][label_b]
+                for key in shared_keys
+            )
+    return pd.DataFrame([row])

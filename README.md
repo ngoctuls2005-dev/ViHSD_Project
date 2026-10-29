@@ -6,6 +6,8 @@ Dự án môn Học máy nghiên cứu phân loại bình luận mạng xã hộ
 
 Đang hoàn thành Bài kiểm tra 1 – tuần 4. Dữ liệu thật đã được tải và xác minh ở revision `88e81b36ca376867640dad9df295e0f7d499ab80`: 24.048 Train, 2.672 Validation và 6.680 Test. Báo cáo có thống kê, biểu đồ, kiểm tra chất lượng và TF-IDF thật. **Chưa huấn luyện mô hình**, đúng phạm vi bài kiểm tra. Kết quả chi tiết và các hạn chế nằm trong [báo cáo](reports/exam1_report.md) và [nhật ký tiến độ](docs/PROGRESS.md).
 
+Mức tham chiếu Macro F1 của chiến lược luôn dự đoán CLEAN là `0,302`, tính từ phân bố nhãn Train; đây là phép tính lý thuyết, không phải kết quả mô hình. Kiểm toán phát hiện 80 chuỗi giao Train–Test có xung đột nhãn; quy trình đánh giá bổ sung và giới hạn này được ghi trong báo cáo.
+
 Nguồn chính thức là [`uitnlp/vihsd` trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd). Cần đăng nhập và chấp thuận điều kiện truy cập. Hugging Face ghi metadata MIT; README tác giả nói dữ liệu chỉ dùng cho nghiên cứu. Vì phạm vi hai ghi chú chưa được làm rõ, dữ liệu và bình luận gốc không được đưa lên GitHub.
 
 ## Cài đặt và tải/phân tích dữ liệu thật
@@ -54,4 +56,6 @@ Không huấn luyện mô hình ở giai đoạn này. Không công khai `data/r
 - [Quy tắc tiền xử lý](docs/preprocessing.md)
 - [Chia tập và TF-IDF](docs/vectorization.md)
 - [Câu hỏi vấn đáp và thực hành](docs/viva_questions.md)
+- [Năm bài thực hành cá nhân](docs/practical_exercises.md)
+- [Phân công và nhật ký đóng góp](docs/contributions.md)
 - [Kế hoạch và nhật ký tiến độ](docs/PROGRESS.md)

@@ -10,6 +10,8 @@
 
 Mục tiêu học máy là dự đoán ba nhãn ViHSD từ bình luận. F1 Macro được chọn làm chỉ số chính vì tính F1 đều cho từng lớp, phù hợp hơn Accuracy đơn lẻ khi lớp nhỏ chỉ chiếm một phần nhỏ dữ liệu. Khi bắt đầu giai đoạn mô hình, cần báo cáo Precision, Recall, F1 từng lớp, ma trận nhầm lẫn và so sánh với baseline. Bài kiểm tra 1 chưa yêu cầu huấn luyện; hiện chưa có kết quả mô hình hay ngưỡng hiệu năng tự đặt.
 
+**Mức tham chiếu lý thuyết:** nếu luôn dự đoán lớp đa số CLEAN, dùng phân bố Train thật (`CLEAN=19.886/24.048`), thì Precision của CLEAN là `0,8269`, Recall là `1`, F1 CLEAN xấp xỉ `0,9053`; F1 của OFFENSIVE và HATE đều bằng `0`. Vì vậy Macro F1 là `(0,9053 + 0 + 0) / 3 = 0,3018 ≈ 0,302`. Đây là giá trị tính từ tần suất nhãn Train cho chiến lược hằng luôn dự đoán CLEAN; **không phải kết quả huấn luyện hoặc đánh giá một mô hình**. Đây là mốc tham khảo tối thiểu cho bài kiểm tra 2.
+
 ## 3. Nguồn, điều kiện sử dụng và từ điển dữ liệu
 
 Nguồn là [ViHSD chính thức trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd), do nhóm UIT NLP cung cấp. Tác giả mô tả 33.400 bình luận có nhãn `CLEAN`, `OFFENSIVE`, `HATE` và yêu cầu trích dẫn bài báo Luu, Nguyen và Nguyen (2021), [arXiv:2103.11528](https://arxiv.org/abs/2103.11528). Hugging Face yêu cầu người dùng đã đăng nhập chấp thuận điều kiện truy cập. Thẻ hiện ghi metadata MIT, còn README tác giả nói dữ liệu chỉ dùng cho nghiên cứu; phạm vi hai ghi chú này chưa được làm rõ. Vì vậy, nhóm không công khai dữ liệu hoặc bình luận nguyên văn.
@@ -97,7 +99,49 @@ Số chuỗi bình luận duy nhất giao nhau giữa các split, sau quy tắc 
 | Train–Test | 792 | 797 |
 | Validation–Test | 92 | 93 |
 
-Đây là rủi ro rò rỉ do dữ liệu trùng, đặc biệt ở cặp Train–Test. Không loại dòng hay chia lại dữ liệu trong bài này; phải giữ lại cảnh báo khi đánh giá mô hình. Cách chuẩn hóa từ viết tắt làm một số chuỗi khác nhau trở nên giống nhau, nên số giao nhau tăng nhẹ sau xử lý.
+Phân tích chi tiết Train–Test:
+
+| Chỉ số | Trước tiền xử lý | Sau tiền xử lý |
+|---|---:|---:|
+| Chuỗi duy nhất giao nhau | 792 | 797 |
+| Dòng Train có văn bản nằm trong phần giao | 857 | 867 |
+| Dòng Test có văn bản nằm trong phần giao | 809 | 814 |
+| Chuỗi giao nhau có nhãn khác giữa hai split | 80 | 80 |
+| Cặp dòng giao nhau nhưng nhãn khác | 96 | 96 |
+| Dòng Train thuộc nhóm nhãn xung đột | 105 | 105 |
+| Dòng Test thuộc nhóm nhãn xung đột | 86 | 86 |
+
+Các dòng thuộc phần giao theo nhãn:
+
+| Split / nhãn | Trước | Sau |
+|---|---:|---:|
+| Train – CLEAN | 759 | 769 |
+| Train – OFFENSIVE | 42 | 42 |
+| Train – HATE | 56 | 56 |
+| Test – CLEAN | 725 | 730 |
+| Test – OFFENSIVE | 41 | 41 |
+| Test – HATE | 43 | 43 |
+
+Các cặp nhãn khác nhau theo hướng Train → Test; số cặp dòng trong ngoặc:
+
+| Nhãn Train → nhãn Test | Chuỗi giao có hướng khác nhãn | Cặp dòng khác nhãn |
+|---|---:|---:|
+| CLEAN → OFFENSIVE | 15 | 16 |
+| CLEAN → HATE | 15 | 17 |
+| OFFENSIVE → CLEAN | 17 | 24 |
+| OFFENSIVE → HATE | 4 | 4 |
+| HATE → CLEAN | 25 | 28 |
+| HATE → OFFENSIVE | 7 | 7 |
+
+Số chuỗi có hướng có thể đếm một chuỗi nhiều lần nếu nó có nhiều kiểu xung đột nhãn; 80 là số chuỗi giao duy nhất có ít nhất một xung đột. Tổng số cặp dòng khác nhãn là 96. Nhãn Test chỉ được dùng ở đây để kiểm toán xung đột và định lượng rủi ro; không dùng để chọn hay sửa quy tắc tiền xử lý hoặc mô hình.
+
+Chuẩn hóa hiện tại tạo thêm 5 chuỗi giao nhau, ảnh hưởng thêm 10 dòng Train và 5 dòng Test; phần tăng thêm đều mang nhãn CLEAN. Không phát sinh thêm chuỗi xung đột nhãn trong phép dò này. Điều đó cho thấy mở rộng viết tắt có thể làm các bình luận khác nhau nhập thành cùng khóa dò, nên không được coi chuẩn hóa là phép khử trùng chắc chắn.
+
+### Phương án đánh giá bổ sung cho Bài kiểm tra 2
+
+Giữ nguyên Test chính thức. Sau khi cố định pipeline, tiền xử lý và siêu tham số chỉ bằng Train/Validation, chạy báo cáo cuối trên Test chính thức và một phép kiểm tra nhạy cảm không giao Train–Test. Tập nhạy cảm xác định chỉ bằng khóa văn bản đã chuẩn hóa, không dùng nhãn để chọn hoặc loại dòng: bỏ khỏi Test các dòng có khóa xuất hiện trong Train, còn 5.866 dòng (CLEAN 4.818, OFFENSIVE 403, HATE 645), tương ứng 5.776 chuỗi duy nhất. Trong phần còn lại có 90 dòng lặp dư nội bộ Test và 6 chuỗi có nhãn mâu thuẫn (12 dòng); giữ các dòng này trong tập nhạy cảm, đồng thời báo riêng mức trùng và xung đột để không tạo thêm quy tắc chọn Test dựa trên nhãn.
+
+Đây chỉ là thiết kế bổ sung, chưa chạy mô hình. Trong Bài kiểm tra 2, mọi quyết định phải được khóa trước khi dùng Test; báo cáo cả số dòng/lớp sau lọc và kết quả trên Test chính thức lẫn phép nhạy cảm. Không so sánh các kết quả này để đổi tiền xử lý, mô hình hay siêu tham số. Các số lọc trên mô tả sự thay đổi phân bố, không chứng minh phép nhạy cảm đại diện cho toàn bộ Test.
 
 ## 7. Xử lý chất lượng dữ liệu
 
@@ -140,14 +184,16 @@ F1 Macro là chỉ số chính vì ba lớp có tỷ lệ rất khác nhau. Cầ
 
 | Tiêu chí | Trạng thái bằng chứng |
 |---|---|
-| 1–2 | Mục tiêu, đầu vào/đầu ra và F1 Macro đã nêu; chưa có mô hình theo đúng phạm vi Bài kiểm tra 1. |
-| 3–4 | Đã xác minh nguồn, schema, số dòng, nhãn, phân bố và biểu đồ trên dữ liệu thật. |
-| 5 | Đã phân tích độ dài, tín hiệu phủ định và độ phủ n-gram trên Train với số liệu. |
-| 6 | Đã định lượng thiếu, trùng, xung đột nhãn, ngoại lệ, kiểu dữ liệu, lệch lớp và trùng giữa split. |
-| 7 | Đã chạy chuẩn hóa trên bản dẫn xuất, so sánh trước/sau và giải thích từng quyết định; dữ liệu/nhãn gốc không đổi. |
-| 8 | Đã chạy PyVi và TF-IDF từ/ký tự trên ba split; fit chỉ trên Train. Đã ghi nhận rủi ro trùng split. |
-| 9 | Hướng dẫn giải thích chiến lược hold-out/F1 Macro có trong `docs/evaluation_guide.md`; sinh viên vẫn cần tự giải thích. |
-| 10 | Notebook thực hành và câu hỏi dựa trên số liệu thật được chuẩn bị; sinh viên vẫn cần chạy lại và thao tác cá nhân. |
+| 1. Phát biểu bài toán | Có đầu vào `free_text`, đầu ra ba mã nhãn và đơn vị mẫu trong báo cáo. |
+| 2. Mục tiêu và chỉ số | F1 Macro cùng mức tham chiếu lý thuyết 0,302 từ tần suất Train; không phải kết quả mô hình. |
+| 3. Nguồn và mô tả dữ liệu | Nguồn, điều kiện, schema, kiểu dữ liệu, nhãn và số dòng đã kiểm chứng; có từ điển dữ liệu. |
+| 4. Thống kê và phân bố | Có bảng phân bố nhãn/độ dài, biểu đồ thật và nhận xét. |
+| 5. Quan hệ đặc trưng–nhãn | Có ba nhận xét định lượng từ độ dài, dấu hiệu phủ định và n-gram trên Train. |
+| 6. Chất lượng dữ liệu | Đã định lượng thiếu, trùng, xung đột nhãn, ngoại lệ, sai định dạng, mất cân bằng và giao split. |
+| 7. Xử lý chất lượng | Có lý do, giới hạn và so sánh trước/sau; dữ liệu/nhãn gốc không đổi. |
+| 8. Chuẩn bị dữ liệu | PyVi/TF-IDF thật chạy trên split chính thức; fit chỉ trên Train. Rủi ro giao split được nêu. |
+| 9. Lý giải phương pháp/chỉ số [CN] | Tài liệu hướng dẫn và baseline có sẵn; mỗi sinh viên vẫn cần tự giải thích. |
+| 10. Vấn đáp/thực hành [CN] | Notebook và năm bài tập đã chuẩn bị; mỗi sinh viên vẫn cần tự thao tác và ghi nhận. |
 
 Điểm do giảng viên đánh giá. Bằng chứng kiểm thử và các giới hạn còn lại được ghi trong [`docs/PROGRESS.md`](../docs/PROGRESS.md).
 
@@ -157,4 +203,6 @@ F1 Macro là chỉ số chính vì ba lớp có tỷ lệ rất khác nhau. Cầ
 - Có văn bản trùng trong cùng split và giữa các split; 792 chuỗi duy nhất trùng Train–Test theo quy tắc dò đã nêu.
 - Có hai giá trị văn bản thiếu trong Train; ngoại lệ độ dài và cách viết bất thường được thống kê nhưng chưa loại bỏ.
 - Metadata giấy phép MIT và ghi chú “chỉ dùng cho nghiên cứu” của tác giả chưa được đối chiếu pháp lý; dữ liệu được giữ riêng, báo cáo công khai không chứa bình luận nguyên văn.
+- Phân công cá nhân chưa được xác nhận. Nhật ký được để trống theo từng thành viên trong [`docs/contributions.md`](../docs/contributions.md); không suy diễn ai đã thực hiện phần nào từ danh tính commit.
+- Năm bài thực hành cá nhân nằm trong [`docs/practical_exercises.md`](../docs/practical_exercises.md); việc hoàn thành cần được từng sinh viên ghi lại thật.
 - AI hỗ trợ soạn mã, cấu trúc báo cáo và nội dung ôn tập. Nhóm cần kiểm tra lại kết quả, hiểu từng bước và tự thực hành trước khi nộp.

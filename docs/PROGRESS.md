@@ -8,6 +8,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 - Repository: `ngoctuls2005-dev/ViHSD_Project`, nhánh chính `main`.
 - Điểm bắt đầu: commit `2f3d61c707359c824921013813f484abcea9ca6c` (`Initial commit`), chỉ có README và `.gitignore`.
+- Commit tham chiếu cho lượt rà soát cuối: `50a172ff7c733c91846ab53935dd62cb6d0fe42e`.
 - Trạng thái dữ liệu: đã xác thực Hugging Face, tải và xác minh `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; bản gốc nằm trong `data/raw/uitnlp_vihsd/` và bị Git bỏ qua. Schema là `free_text:string`, `label_id:int64`; ba split có tổng 33.400 dòng. Metadata license MIT và ghi chú tác giả “chỉ dùng cho nghiên cứu” chưa được đối chiếu; không tái phân phối dữ liệu.
 - Trạng thái mô hình: chưa huấn luyện, đúng phạm vi Bài kiểm tra 1.
 - Cập nhật gần nhất: 2026-10-29.
@@ -20,7 +21,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** đầu vào/đầu ra và ba lớp được nêu cụ thể; F1 Macro được chọn và giải thích; không ghi kết quả giả; kế hoạch có đầu ra, tiêu chí hoàn thành và ranh giới rõ cho từng giai đoạn.
 
-**Tiêu chí:** 1, 2 và bản hướng dẫn giải thích cho tiêu chí 9. **Trạng thái:** hoàn tất; tài liệu đã được rà soát thủ công. Bằng chứng ban đầu ghi ở nhật ký 2026-10-23.
+**Tiêu chí:** 1, 2 và bản hướng dẫn giải thích cho tiêu chí 9. **Trạng thái:** hoàn tất về tài liệu. Tiêu chí 2 có baseline Macro F1 lý thuyết 0,302, tính từ tỷ lệ CLEAN trong Train cho chiến lược luôn dự đoán CLEAN; đây không phải kết quả mô hình.
 
 ### Giai đoạn 2 – Khảo sát và phân tích dữ liệu
 
@@ -44,17 +45,19 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** vectorizer chỉ `fit` trên Train, chỉ `transform` Validation/Test; không oversampling hay học thống kê trên toàn bộ dữ liệu; không dùng Test để chọn tham số/đặc trưng; có kiểm thử phù hợp.
 
-**Tiêu chí:** 8. **Trạng thái:** đã kiểm chứng trên ba split thật. PyVi và TF-IDF từ/ký tự tạo 560.253 chiều; chỉ Train được fit, Validation/Test chỉ transform. Đã phát hiện 792 chuỗi chuẩn hóa trùng Train–Test trước tiền xử lý (797 sau), cần giữ cảnh báo này cho mọi đánh giá mô hình.
+**Tiêu chí:** 8. **Trạng thái:** đã kiểm chứng trên ba split thật. PyVi và TF-IDF từ/ký tự tạo 560.253 chiều; chỉ Train được fit, Validation/Test chỉ transform. Phân tích chi tiết cho thấy 792/797 chuỗi Train–Test giao nhau trước/sau, 857/867 dòng Train và 809/814 dòng Test bị ảnh hưởng, 80 chuỗi xung đột nhãn và 96 cặp dòng khác nhãn. Rủi ro này phải được xử lý trong thiết kế đánh giá Bài kiểm tra 2.
 
 ### Giai đoạn 5 – Báo cáo, kiểm thử và chuẩn bị vấn đáp
 
-**Đầu ra:** báo cáo `reports/exam1_report.md` hoàn chỉnh cho tiêu chí 1–9; notebook thực hành; câu hỏi và trả lời gợi ý; hướng dẫn chạy trên Windows; bằng chứng kiểm thử và bảng đóng góp/nhật ký.
+**Đầu ra:** báo cáo `reports/exam1_report.md` cho tiêu chí 1–9; notebook thực hành; câu hỏi, năm bài thực hành cá nhân; hướng dẫn chạy trên Windows; bằng chứng kiểm thử và mẫu phân công/nhật ký đóng góp.
 
 **Điều kiện hoàn thành:** notebook chạy lại từ đầu trên dữ liệu có quyền sử dụng; bảng, hình và số liệu được tạo từ kết quả thực tế; mọi giới hạn/chưa xác minh được nêu; sinh viên có thể giải thích và thao tác lại.
 
-**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, câu hỏi vấn đáp và kiểm thử đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; sinh viên vẫn cần tự thực hành và giải thích kết quả cá nhân.
+**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, năm bài thực hành và mẫu nhật ký cá nhân đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; danh tính/phân công cá nhân và việc sinh viên tự thực hành vẫn cần xác nhận.
 
 ## Nhật ký tiến độ
+
+> Các ghi chú ngày 2026-10-23 dưới đây là ảnh chụp lịch sử khi chưa có quyền truy cập. Chúng được cập nhật bởi trạng thái và bằng chứng ngày 2026-10-29, không mô tả trạng thái hiện tại.
 
 ### 2026-10-23 – Khởi tạo
 
@@ -114,7 +117,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Trang [ViHSD trên Hugging Face](https://huggingface.co/datasets/uitnlp/vihsd) ghi ba lớp và metadata license MIT; README [repository của nhóm tác giả](https://github.com/sonlam1102/vihsd) ghi 33.400 bình luận và “chỉ dùng cho nghiên cứu”. Phạm vi hai ghi chú sử dụng chưa được làm rõ; không tái phân phối dữ liệu.
 - Schema, số dòng, nhãn, phân bố, độ dài, chất lượng, chuẩn hóa và kích thước TF-IDF đã được kiểm chứng trực tiếp trên revision ghi trong báo cáo. Bảng tổng hợp không chứa bình luận.
 - Dữ liệu gốc chỉ tồn tại cục bộ trong `data/raw/`; `TEC/` tiếp tục nằm ngoài Git.
-- Còn 792 chuỗi chuẩn hóa trùng Train–Test trước xử lý và 797 sau; cần nêu rủi ro này khi thực hiện Bài kiểm tra 2. Chưa huấn luyện mô hình và chưa có kết quả dự đoán.
+- Lượt rà soát cuối đã chi tiết hóa giao Train–Test (792/797 chuỗi, dòng theo nhãn, xung đột và cặp nhãn); xem báo cáo. Rủi ro còn nguyên trong split chính thức và cần nêu khi làm Bài kiểm tra 2. Chưa huấn luyện mô hình và chưa có kết quả dự đoán.
 - Sinh viên cần tự chạy notebook, giải thích lựa chọn và hoàn thành thao tác tại chỗ; sản phẩm này không thay thế phần thực hành cá nhân.
 
 ### 2026-10-29 – Phân tích ViHSD thật và hoàn tất minh chứng cho tiêu chí 3–8
@@ -132,3 +135,14 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Trạng thái tiêu chí: 3–8 có bằng chứng trên ViHSD thật; 1–2 có tài liệu; 9 có hướng dẫn tự giải thích; 10 có notebook/bài tập nhưng sinh viên vẫn cần thực hành cá nhân. Không tự khẳng định điểm.
 - Điều kiện sử dụng chưa được làm rõ: metadata Hugging Face ghi MIT, README tác giả ghi “chỉ dùng cho nghiên cứu”. Không đẩy dữ liệu gốc, bình luận, token hoặc đầu ra có văn bản.
 - Commit triển khai `4fd0a0c7f05f0a6ec3fa11cb91d973e02345b649` (`feat: phan tich du lieu ViHSD that`) đã được đẩy thành công lên `origin/main` bằng push thường; sau push, `main` đồng bộ với `origin/main`. Không có `TEC/`, dữ liệu gốc, token hoặc output notebook trong commit.
+
+### 2026-10-29 – Rà soát cuối Bài kiểm tra 1
+
+- Xác nhận điểm bắt đầu là commit `50a172ff7c733c91846ab53935dd62cb6d0fe42e`, `main` đồng bộ với `origin/main` và không có thay đổi người dùng trước lượt này.
+- Bổ sung mức tham chiếu Macro F1 lý thuyết `0,3018 ≈ 0,302` cho chiến lược luôn dự đoán CLEAN, tính từ Train (`19.886/24.048`); ghi rõ đây không phải kết quả huấn luyện hoặc dự đoán.
+- Bổ sung kiểm toán Train–Test trước/sau chuẩn hóa: 792/797 chuỗi duy nhất; 857/867 dòng Train (CLEAN 759/769, OFFENSIVE 42/42, HATE 56/56); 809/814 dòng Test (CLEAN 725/730, OFFENSIVE 41/41, HATE 43/43). Cả hai phép đo có 80 chuỗi xung đột, gồm 105 dòng Train và 86 dòng Test trong các nhóm xung đột, với 96 cặp dòng khác nhãn. Chuẩn hóa thêm 5 chuỗi giao nhau, 10 dòng Train và 5 dòng Test, tất cả đều CLEAN, không làm tăng xung đột. Nhãn Test chỉ dùng để kiểm toán.
+- Đề xuất phép nhạy cảm Bài kiểm tra 2 trên các dòng Test không có khóa sau chuẩn hóa trùng Train; quy trình tiền xử lý/mô hình phải khóa trước khi dùng Test. Đây là thiết kế, chưa chạy mô hình và không thay Test chính thức.
+- Đồng bộ README, báo cáo, hướng dẫn đánh giá/tiền xử lý/vector hóa, vấn đáp và nhật ký. Ghi chú 2026-10-23 được giữ như lịch sử đúng thời điểm; phần đầu nhật ký chỉ rõ chúng đã được bằng chứng 2026-10-29 thay thế.
+- Tạo [`docs/contributions.md`](contributions.md) với bảng phân công/nhật ký để trống chờ nhóm xác nhận, không gán việc dựa trên tên Git; tạo [`docs/practical_exercises.md`](practical_exercises.md) gồm năm bài có yêu cầu, thao tác và cách giải thích. Sinh viên cần tự hoàn tất phần cá nhân.
+- Kiểm thử cuối: `$env:VIHSD_RUN_INTEGRATION='1'; python -m unittest discover -s tests -v` — **25 kiểm thử đạt**, gồm xác minh split/schema/nhãn/dữ liệu thật và chạy notebook từ đầu trên ba split; `python -m compileall -q src scripts tests` đạt. Không huấn luyện mô hình.
+- Kiểm tra `.gitignore`, diff, dữ liệu, output notebook và nội dung không được công khai đang được hoàn tất trước commit/push. Ghi SHA commit cuối sau khi đẩy an toàn.

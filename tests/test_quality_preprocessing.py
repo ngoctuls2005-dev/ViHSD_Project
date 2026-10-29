@@ -16,6 +16,7 @@ from vihsd.preprocessing import (
 )
 from vihsd.quality import (
     class_balance_summary,
+    cross_split_duplicate_audit,
     cross_split_duplicate_summary,
     quality_issue_table,
 )
@@ -56,6 +57,39 @@ class QualityAndPreprocessingTests(unittest.TestCase):
         overlap = cross_split_duplicate_summary(splits, "body")
         self.assertEqual(int(overlap["shared_unique_texts"].sum()), 2)
         self.assertNotIn("body", overlap.columns)
+
+    def test_cross_split_audit_counts_affected_rows_and_label_conflicts(self):
+        train = pd.DataFrame(
+            {"body": ["same text", "ko", "ko"], "target": ["CLEAN", "HATE", "OFFENSIVE"]}
+        )
+        test = pd.DataFrame(
+            {"body": ["same   text", "không"], "target": ["OFFENSIVE", "CLEAN"]}
+        )
+        before = cross_split_duplicate_audit(
+            train, test, "body", "target", {label: label for label in VALID_LABELS}, "before"
+        ).iloc[0]
+        after = cross_split_duplicate_audit(
+            train,
+            test,
+            "body",
+            "target",
+            {label: label for label in VALID_LABELS},
+            "after",
+            text_transform=normalize_text,
+        ).iloc[0]
+        self.assertEqual(before["shared_unique_texts"], 1)
+        self.assertEqual(before["split_a_rows_affected"], 1)
+        self.assertEqual(before["conflicting_unique_texts"], 1)
+        self.assertEqual(before["differing_label_row_pairs"], 1)
+        self.assertEqual(before["conflicting_texts_CLEAN_to_OFFENSIVE"], 1)
+        self.assertEqual(after["shared_unique_texts"], 2)
+        self.assertEqual(after["split_a_rows_affected"], 3)
+        self.assertEqual(after["split_b_rows_affected"], 2)
+        self.assertEqual(after["conflicting_unique_texts"], 2)
+        self.assertEqual(after["differing_label_row_pairs"], 3)
+        self.assertEqual(after["differing_label_pairs_HATE_to_CLEAN"], 1)
+        self.assertEqual(after["differing_label_pairs_OFFENSIVE_to_CLEAN"], 1)
+        self.assertNotIn("body", before.index)
 
     def test_unicode_whitespace_and_controlled_abbreviations(self):
         raw = "  Ko   muo\u0302\u0301n!!! 😀  "

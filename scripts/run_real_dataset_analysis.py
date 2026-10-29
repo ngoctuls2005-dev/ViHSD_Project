@@ -18,8 +18,12 @@ if str(PROJECT_ROOT / "src") not in sys.path:
 
 from vihsd.eda import comment_lengths, length_summary
 from vihsd.preparation import fit_tfidf_on_train
-from vihsd.preprocessing import normalize_series, preprocessing_summary
-from vihsd.quality import cross_split_duplicate_summary, quality_issue_table
+from vihsd.preprocessing import normalize_series, normalize_text, preprocessing_summary
+from vihsd.quality import (
+    cross_split_duplicate_audit,
+    cross_split_duplicate_summary,
+    quality_issue_table,
+)
 
 
 DATASET_ID = "uitnlp/vihsd"
@@ -305,6 +309,28 @@ def write_outputs(
     processed_overlaps = cross_split_duplicate_summary(processed_frames, TEXT_COLUMN)
     processed_overlaps.insert(0, "stage", "after_preprocessing")
     overlaps = pd.concat([raw_overlaps, processed_overlaps], ignore_index=True)
+    detailed_overlaps = pd.concat(
+        [
+            cross_split_duplicate_audit(
+                frames["train"],
+                frames["test"],
+                TEXT_COLUMN,
+                LABEL_COLUMN,
+                LABEL_NAMES,
+                "before_preprocessing",
+            ),
+            cross_split_duplicate_audit(
+                frames["train"],
+                frames["test"],
+                TEXT_COLUMN,
+                LABEL_COLUMN,
+                LABEL_NAMES,
+                "after_preprocessing",
+                text_transform=normalize_text,
+            ),
+        ],
+        ignore_index=True,
+    )
     signals = build_signal_summary(frames)
     processed_quality_parts = []
     for split_name, frame in processed_frames.items():
@@ -371,6 +397,9 @@ def write_outputs(
     summary_all.to_csv(ARTIFACTS_PATH / "length_summary_all_splits.csv", index=False, encoding="utf-8-sig")
     quality.to_csv(ARTIFACTS_PATH / "quality_issues_by_split.csv", index=False, encoding="utf-8-sig")
     overlaps.to_csv(ARTIFACTS_PATH / "cross_split_duplicates.csv", index=False, encoding="utf-8-sig")
+    detailed_overlaps.to_csv(
+        ARTIFACTS_PATH / "train_test_duplicate_audit.csv", index=False, encoding="utf-8-sig"
+    )
     signals.to_csv(ARTIFACTS_PATH / "text_signals_by_label.csv", index=False, encoding="utf-8-sig")
     pd.DataFrame(prep_rows).to_csv(ARTIFACTS_PATH / "preprocessing_comparison.csv", index=False, encoding="utf-8-sig")
     processed_quality.to_csv(ARTIFACTS_PATH / "quality_after_preprocessing.csv", index=False, encoding="utf-8-sig")
@@ -403,6 +432,8 @@ def write_outputs(
     print(summary_all.to_string(index=False))
     print("Cross-split duplicate counts:")
     print(overlaps.to_string(index=False))
+    print("Train/Test affected rows and label conflicts:")
+    print(detailed_overlaps.to_string(index=False))
     print("TF-IDF dimensions:")
     print(pd.DataFrame(feature_rows).to_string(index=False))
     print("Preprocessing summary:")

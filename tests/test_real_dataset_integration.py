@@ -10,6 +10,9 @@ import unittest
 
 from datasets import load_dataset
 
+from vihsd.preprocessing import normalize_text
+from vihsd.quality import cross_split_duplicate_audit
+
 
 @unittest.skipUnless(
     os.environ.get("VIHSD_RUN_INTEGRATION") == "1",
@@ -30,6 +33,31 @@ class RealDatasetIntegrationTests(unittest.TestCase):
             self.assertEqual(split.features["free_text"].dtype, "string")
             self.assertEqual(split.features["label_id"].dtype, "int64")
             self.assertEqual(set(split.unique("label_id")), {0, 1, 2})
+        label_names = {0: "CLEAN", 1: "OFFENSIVE", 2: "HATE"}
+        train = dataset["train"].to_pandas()
+        test = dataset["test"].to_pandas()
+        before = cross_split_duplicate_audit(
+            train, test, "free_text", "label_id", label_names, "before"
+        ).iloc[0]
+        after = cross_split_duplicate_audit(
+            train,
+            test,
+            "free_text",
+            "label_id",
+            label_names,
+            "after",
+            text_transform=normalize_text,
+        ).iloc[0]
+        self.assertEqual(before["shared_unique_texts"], 792)
+        self.assertEqual(before["split_a_rows_affected"], 857)
+        self.assertEqual(before["split_b_rows_affected"], 809)
+        self.assertEqual(before["conflicting_unique_texts"], 80)
+        self.assertEqual(before["differing_label_row_pairs"], 96)
+        self.assertEqual(after["shared_unique_texts"], 797)
+        self.assertEqual(after["split_a_rows_affected"], 867)
+        self.assertEqual(after["split_b_rows_affected"], 814)
+        self.assertEqual(after["conflicting_unique_texts"], 80)
+        self.assertEqual(after["differing_label_row_pairs"], 96)
 
     def test_real_practice_notebook_cells_execute_without_saved_outputs(self):
         project_root = Path(__file__).resolve().parents[1]

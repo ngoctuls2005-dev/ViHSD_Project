@@ -1,6 +1,6 @@
 # Bắt đầu tại đây – Lê Quang Tài
 
-Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ tự và dùng tài khoản Hugging Face của chính mình nếu cần tải dữ liệu. Trạng thái thực hành cá nhân hiện là **Chưa xác nhận hoàn thành**. Không chia sẻ token, dữ liệu gốc, bình luận thật hoặc thư mục artifact lên GitHub. Bài kiểm tra 1 không yêu cầu huấn luyện mô hình.
+Tài đã gửi báo cáo tự xác nhận hoàn thành 10 bước ngày **2026-10-29**. Các số liệu kỹ thuật chính được đối chiếu với dữ liệu thật và bảng tổng hợp; phần tự thao tác/vấn đáp không được ghi nhận như quan sát độc lập. Các dấu kiểm dưới đây phản ánh báo cáo của Tài. Không chia sẻ token, dữ liệu gốc, bình luận thật hoặc thư mục artifact lên GitHub; Bài kiểm tra 1 không yêu cầu huấn luyện mô hình.
 
 ## 1. Tải dự án từ GitHub và mở trong VS Code
 
@@ -19,7 +19,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Repository Public chứa mã và tài liệu; dữ liệu gốc không có trong Git và phải được tải hợp lệ riêng.
 - **Lỗi thường gặp:** Nếu `git` hoặc `code` không nhận diện, cài Git/VS Code hoặc mở dự án bằng nút giao diện **Open Folder**. Nếu thư mục đã được clone, không clone lồng thêm; kiểm tra `git status` và hỏi nhóm trước khi cập nhật nếu có thay đổi riêng.
 - **Bằng chứng cần lưu:** Ghi ngày và commit đang dùng; commit một mình không chứng minh đã thực hành cá nhân.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo).
 
 ## 2. Tạo và chọn môi trường Python
 
@@ -41,7 +41,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** `requirements-data.txt` cài thêm thư viện truy cập Hugging Face; `.venv` giúp tách thư viện dự án khỏi Python khác trên máy.
 - **Lỗi thường gặp:** Nếu kích hoạt PowerShell bị chặn, không đổi chính sách lâu dài; chọn `.venv\Scripts\python.exe` làm interpreter hoặc chạy `\.venv\Scripts\python.exe -m pip ...`. Nếu Notebook báo thiếu module, kiểm tra kernel có phải `.venv` không.
 - **Bằng chứng cần lưu:** Ghi phiên bản Python và xác nhận kernel `.venv`, không chụp thông tin tài khoản.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo).
 
 ## 3. Đăng nhập Hugging Face bằng tài khoản được cấp quyền
 
@@ -59,7 +59,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Việc clone repository công khai không tự cấp quyền dữ liệu có kiểm soát. Notebook chỉ tải được dataset sau khi tài khoản được phép.
 - **Lỗi thường gặp:** Lỗi 401/403: kiểm tra đúng tài khoản, đã chấp thuận điều kiện và quyền đã được cấp. `hf` không nhận diện: cài lại `requirements-data.txt`, mở terminal mới rồi thử lại. Không gửi token cho nhóm/Codex để nhờ đăng nhập.
 - **Bằng chứng cần lưu:** Chỉ ghi “đã xác thực/đã yêu cầu quyền/đang chờ”; không lưu token, ảnh trang cá nhân hay thông tin nhạy cảm.
-- [ ] Tự hoàn thành và ghi trạng thái đúng vào nhật ký.
+- [x] Tự hoàn thành và ghi trạng thái đúng vào nhật ký (Tài tự báo cáo).
 
 ## 4. Mở Notebook và nạp ViHSD thật
 
@@ -77,7 +77,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Notebook không chia lại dữ liệu. Fixture là dữ liệu giả chỉ để thử mã và không được dùng làm kết quả báo cáo.
 - **Lỗi thường gặp:** Nếu hiện `FIXTURE MINH HOA`, đặt biến về `0`, khởi động lại kernel và chạy từ đầu. Nếu thiếu dữ liệu, hoàn thành bước 3 rồi chạy lại. Nếu không thấy module, quay lại bước 2 và chọn đúng kernel.
 - **Bằng chứng cần lưu:** Ghi ba kích thước split và revision ghi trong báo cáo; không lưu/đẩy Notebook có output. Sau khi xem, dùng **Clear All Outputs** trước khi lưu hoặc chia sẻ.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo; số liệu kỹ thuật đã đối chiếu).
 
 ## 5. Đọc kết quả trong báo cáo mục 6–8
 
@@ -89,7 +89,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Chuẩn hóa tạo văn bản dẫn xuất, không sửa văn bản/nhãn gốc. Nhãn Test chỉ được dùng trong báo cáo để audit, không chọn quy tắc hay mô hình.
 - **Lỗi thường gặp:** Không gọi 792 chuỗi là 792 dòng; không kết luận chuẩn hóa luôn tốt chỉ vì số token viết tắt phát hiện giảm; không xem n-gram như quan hệ nhân quả.
 - **Bằng chứng cần lưu:** Viết tóm tắt 3–5 câu bằng lời của mình, không chép bình luận ví dụ.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo; kết quả đã đối chiếu).
 
 ## 6. Tái tạo kiểm toán trùng lặp
 
@@ -108,7 +108,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Tăng số giao nhau đến từ 5 chuỗi và thêm các dòng CLEAN; số xung đột không tăng. Không sửa nhãn và không chia lại split.
 - **Lỗi thường gặp:** Nếu file CSV chưa có, kiểm tra script kết thúc thành công và dữ liệu được cấp quyền. Nếu truy cập Hugging Face lỗi, quay lại bước 3. Không đưa output `artifacts/` lên Git.
 - **Bằng chứng cần lưu:** Ghi các số tổng hợp và lời giải thích; không lưu nội dung bình luận.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo; kết quả audit đã đối chiếu).
 
 ## 7. Thử chuẩn hóa trên bản sao dữ liệu
 
@@ -127,7 +127,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** `.copy()` tạo đầu vào thử riêng. Quy tắc viết tắt có thể đổi cách biểu diễn và làm chuỗi khác nhau nhập thành cùng khóa.
 - **Lỗi thường gặp:** `NameError` thường do chưa chạy cell nạp/chuẩn hóa hoặc kernel vừa khởi động lại; chạy lại notebook từ đầu. Không sửa `data/raw/`, không đổi nhãn, không in `source_copy`/`trial_copy`.
 - **Bằng chứng cần lưu:** Chỉ ghi bảng số tổng hợp và nêu quy tắc đã thử; bỏ văn bản bình luận khỏi ảnh chụp.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo; thống kê đã đối chiếu).
 
 ## 8. Tìm `fit_transform`, `transform` và kích thước TF-IDF
 
@@ -139,7 +139,7 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Hai vectorizer được fit trên Train; Validation/Test chỉ transform bằng vocabulary và IDF đã học. Đây là tạo đặc trưng, chưa phải huấn luyện mô hình phân loại.
 - **Lỗi thường gặp:** Nếu ma trận có kích thước khác, xác nhận đã nạp đúng revision/split và chạy cell từ đầu. Không fit riêng lại trên Validation/Test.
 - **Bằng chứng cần lưu:** Ghi vị trí fit/transform trong mã và ba số chiều; không chụp danh sách từ vựng.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo; mã và số liệu đã đối chiếu).
 
 ## 9. Tự làm phần thực hành của Tú
 
@@ -151,16 +151,16 @@ Hướng dẫn này giả định Tài mới nhận dự án. Đi theo thứ t�
 - **Giải thích:** Không dùng nhãn Test hoặc kết quả Test để chọn quy tắc/model; Bài kiểm tra 1 chưa huấn luyện model.
 - **Lỗi thường gặp:** Gọi 0,302 là điểm mô hình; dùng tập Test con thay hẳn Test chính thức; thay đổi quy trình sau khi xem Test.
 - **Bằng chứng cần lưu:** Tự viết phép tính và 3–5 câu giải thích trong nhật ký.
-- [ ] Tự hoàn thành và ghi vào nhật ký.
+- [x] Tự hoàn thành và ghi vào nhật ký (Tài tự báo cáo).
 
 ## 10. Ghi kết quả và báo đã hoàn thành
 
 - **Mục đích:** Để nhóm biết chính xác phần Tài đã tự thực hiện.
 - **Tệp cần mở:** Mục **Lê Quang Tài** trong `docs/contributions.md`.
-- **Các bước:** Sau mỗi bài, ghi ngày, thao tác tự làm, kết quả hiểu được, đường dẫn/ảnh đã lược thông tin nhạy cảm và xác nhận của Tài. Báo cho Tú/nhóm biết bài nào đã xong và bài nào còn vướng.
+- **Các bước:** Tài đã gửi báo cáo chi tiết; nhật ký [`docs/contributions.md`](contributions.md) được đồng bộ theo báo cáo ngày 2026-10-29. Nếu có chi tiết chưa chính xác, Tài cần tự sửa phần của mình.
 - **Lệnh:** Không cần lệnh. Nếu muốn lấy SHA đang dùng, chạy `git rev-parse HEAD`.
 - **Kết quả mong đợi:** Nhật ký thể hiện sự tự thực hành của Tài; trạng thái chỉ đổi sau khi Tài xác nhận.
 - **Giải thích:** Tệp nhóm và commit do Codex chuẩn bị là tài liệu hỗ trợ, không phải minh chứng thao tác cá nhân.
 - **Lỗi thường gặp:** Không điền ngày/kết quả khi chưa làm; không đánh dấu bài của Tú; không đưa mã sinh viên, token hoặc bình luận vào bản công khai.
 - **Bằng chứng cần lưu:** Ghi phần Tài tự xác nhận; nếu có ảnh, chỉ dùng bảng số tổng hợp.
-- [ ] Tôi đã tự cập nhật nhật ký và thông báo cho nhóm.
+- [x] Tôi đã tự cập nhật nhật ký và thông báo cho nhóm (Tài tự báo cáo).

@@ -108,5 +108,5 @@ Các phần này thuộc phân công chính của Tài; Tú được yêu cầu 
 - Đây là tài liệu ôn tập, không tự nó chứng minh ai đã thao tác.
 - Ngày 2026-10-29, Tú gửi báo cáo chi tiết và tự xác nhận đã chuẩn bị môi trường, tải dữ liệu thật, chạy Notebook, hoàn thành bài 1–5 và trả lời 8 câu vấn đáp. Báo cáo cũng cho biết Tú đã cập nhật checklist và nhật ký cá nhân.
 - Codex đối chiếu độc lập các số liệu chính với dữ liệu thật và chạy lại bộ kiểm thử tích hợp: 25 đạt. Việc này xác nhận kết quả kỹ thuật có thể tái lập, không chứng minh độc lập người thực hiện hoặc chất lượng trả lời miệng.
-- Nhật ký [`contributions.md`](contributions.md) ghi rõ phần tự xác nhận của Tú, phần được đối chiếu kỹ thuật và giới hạn chứng cứ. Chưa có người quan sát độc lập hoặc xác nhận của giảng viên về vấn đáp/thực hành tại chỗ.
-- Tài chưa gửi báo cáo hoàn thành.
+- Nhật ký [`contributions.md`](contributions.md) ghi rõ phần tự xác nhận của Tú và Tài, phần được đối chiếu kỹ thuật và giới hạn chứng cứ. Chưa có người quan sát độc lập hoặc xác nhận của giảng viên về vấn đáp/thực hành tại chỗ của cả hai.
+- Ngày 2026-10-29, Tài cũng gửi báo cáo tự xác nhận hoàn thành phần được giao và học chéo. Các số liệu audit, TF-IDF/NNZ và chuẩn hóa chính đã được đối chiếu; phần thực hành/vấn đáp tại chỗ chưa có người chứng kiến độc lập.

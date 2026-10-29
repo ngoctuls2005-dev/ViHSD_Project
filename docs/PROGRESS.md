@@ -131,4 +131,4 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Bổ sung kiểm thử tích hợp tùy chọn với Hugging Face và notebook thật. Lệnh `$env:VIHSD_RUN_INTEGRATION='1'; python -m unittest discover -s tests -v` chạy **24 kiểm thử đạt**; `python -m compileall -q src scripts tests` đạt. Unit test notebook dùng fixture chỉ để kiểm thử kỹ thuật, còn kiểm thử tích hợp xác minh dữ liệu thật.
 - Trạng thái tiêu chí: 3–8 có bằng chứng trên ViHSD thật; 1–2 có tài liệu; 9 có hướng dẫn tự giải thích; 10 có notebook/bài tập nhưng sinh viên vẫn cần thực hành cá nhân. Không tự khẳng định điểm.
 - Điều kiện sử dụng chưa được làm rõ: metadata Hugging Face ghi MIT, README tác giả ghi “chỉ dùng cho nghiên cứu”. Không đẩy dữ liệu gốc, bình luận, token hoặc đầu ra có văn bản.
-- Trạng thái Git/commit/push sẽ được ghi sau bước rà soát cuối cùng ở lượt này.
+- Commit triển khai `4fd0a0c7f05f0a6ec3fa11cb91d973e02345b649` (`feat: phan tich du lieu ViHSD that`) đã được đẩy thành công lên `origin/main` bằng push thường; sau push, `main` đồng bộ với `origin/main`. Không có `TEC/`, dữ liệu gốc, token hoặc output notebook trong commit.

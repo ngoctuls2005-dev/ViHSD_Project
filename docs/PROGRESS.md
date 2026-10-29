@@ -53,7 +53,7 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Điều kiện hoàn thành:** notebook chạy lại từ đầu trên dữ liệu có quyền sử dụng; bảng, hình và số liệu được tạo từ kết quả thực tế; mọi giới hạn/chưa xác minh được nêu; sinh viên có thể giải thích và thao tác lại.
 
-**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, năm bài thực hành và mẫu nhật ký cá nhân đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; danh tính/phân công cá nhân và việc sinh viên tự thực hành vẫn cần xác nhận.
+**Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, năm bài thực hành, bảng phân công và hướng dẫn riêng cho từng thành viên đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; ngày/kết quả thực hành và xác nhận cá nhân của sinh viên vẫn cần bổ sung.
 
 ## Nhật ký tiến độ
 
@@ -147,3 +147,11 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Kiểm thử cuối: `$env:VIHSD_RUN_INTEGRATION='1'; python -m unittest discover -s tests -v` — **25 kiểm thử đạt**, gồm xác minh split/schema/nhãn/dữ liệu thật và chạy notebook từ đầu trên ba split; `python -m compileall -q src scripts tests` đạt. Không huấn luyện mô hình.
 - Kiểm tra cuối đạt: `.gitignore` loại `TEC/`, `data/raw/` và `artifacts/`; danh sách thay đổi không chứa các thư mục này; `git diff --check` sạch; notebook có 6 code cell, 0 output đã lưu và 0 execution count; quét mẫu token/khóa không tìm thấy kết quả. Không có dữ liệu gốc, bình luận thật, token hoặc bí mật trong thay đổi.
 - Commit rà soát `c942633b3bf24c48916db72bc9590a2daf015d62` (`feat: audit duplicate splits and finalize exam1 docs`) đã được đẩy thành công lên `origin/main` bằng push thường, không force; `main` và `origin/main` đồng bộ tại SHA này. Không huấn luyện mô hình.
+
+### 2026-10-29 – Phân công nhóm và hướng dẫn thực hành
+
+- Đọc lại `AGENTS.md`, nhật ký tiến độ, tài liệu cục bộ `TEC/Task.md` và `TEC/Evaluation_Criteria.md`, báo cáo, README, notebook, script, tài liệu thực hành/đóng góp và trạng thái Git.
+- Tạo bảng phân công chung và hướng dẫn bắt đầu riêng cho Hoàng Ngọc Tú, Lê Quang Tài; cập nhật README để các liên kết nằm ngay đầu trang.
+- Cập nhật năm bài tập với người phụ trách, kết quả thật đã xác minh, câu hỏi tự kiểm tra và điều kiện xác nhận. Cập nhật nhật ký theo từng người nhưng để trạng thái cá nhân là “Chưa xác nhận hoàn thành”; không ghi mã sinh viên trong bản công khai và không gán thao tác do Codex chuẩn bị cho sinh viên.
+- Hướng dẫn Tài tạo môi trường Windows, xác thực bằng tài khoản Hugging Face được cấp quyền, chạy Notebook, audit trùng, thử chuẩn hóa trên bản sao, kiểm tra `fit_transform`/`transform` và ghi minh chứng. Không sửa mã nguồn, dữ liệu hoặc kết quả thực nghiệm; không huấn luyện mô hình.
+- Kiểm tra trước khi đẩy: liên kết nội bộ và hàng rào code Markdown đều hợp lệ; các lệnh PowerShell/đường dẫn trong hướng dẫn đã đối chiếu với repo; không thấy mã sinh viên hoặc mẫu token/khóa trong tài liệu công khai; `TEC/` và dữ liệu không bị sửa hoặc đưa vào thay đổi. Không chạy lại bộ kiểm thử phần mềm vì lượt này chỉ thay đổi Markdown.

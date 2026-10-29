@@ -1,29 +1,42 @@
-# Phân công và nhật ký đóng góp cá nhân
+# Nhật ký đóng góp cá nhân
 
-Tài liệu này chuẩn bị minh chứng cho tiêu chí cá nhân. Chưa có danh sách thành viên, phân công được xác nhận hoặc nhật ký thao tác cá nhân trong tài liệu dự án, nên các mục cá nhân bên dưới được để trống. Không tự gán công việc dựa trên tên tác giả Git: lịch sử hiện có một danh tính Git cấu hình và không chứng minh sinh viên nào đã thực hiện từng việc.
+Các vai trò dưới đây là phân công dự kiến của nhóm. **Chưa có kết quả thực hành cá nhân nào được xác nhận trong tài liệu này.** Tệp công khai không ghi mã sinh viên. Codex có thể chuẩn bị mã/tài liệu, nhưng việc đó không được tính là thao tác hay xác nhận của Tú hoặc Tài.
 
-## Danh sách và phân công
+Xem [bảng phân công chung](TEAM_ASSIGNMENTS.md) và các [bài thực hành](practical_exercises.md). Mỗi thành viên tự cập nhật phần của mình sau khi thật sự làm xong; không điền ngày hoặc kết quả thay cho nhau.
 
-| Thành viên | Vai trò đã thống nhất | Phần việc được giao | Xác nhận của thành viên |
-|---|---|---|---|
-|  |  |  |  |
-|  |  |  |  |
+## Hoàng Ngọc Tú
 
-## Nhật ký thực hiện
+- **Nhiệm vụ được giao:** tiêu chí 1–5; phụ trách chính Bài thực hành 1 và 3; tự làm Bài 2, 4, 5 để hiểu phần của Tài.
+- **Trạng thái:** Chưa xác nhận hoàn thành.
+- **Ngày tự thực hiện:** Chưa ghi nhận.
+- **Kết quả tự thực hiện:** Chưa ghi nhận.
+- **Bằng chứng:** Chưa cung cấp.
+- **Xác nhận của thành viên:** Chưa có.
 
-Mỗi thành viên tự ghi công việc đã thật sự hoàn thành, ngày thực hiện và bằng chứng có thể kiểm tra. Với thao tác trực tiếp hoặc vấn đáp, ghi ngắn nội dung yêu cầu và kết quả; không điền trước thay cho sinh viên.
+| Ngày | Tiêu chí/bài | Việc Tú tự làm | Kết quả Tú tự giải thích | Bằng chứng do Tú cung cấp | Xác nhận của Tú |
+|---|---|---|---|---|---|
+|  |  |  |  |  |  |
 
-| Ngày | Thành viên | Giai đoạn/tiêu chí | Công việc tự thực hiện | Tệp/kết quả | Bằng chứng (commit, lệnh chạy, ảnh/chữ ký xác nhận) | Thành viên xác nhận |
-|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
+## Lê Quang Tài
 
-## Cách hoàn thiện trung thực
+- **Nhiệm vụ được giao:** tiêu chí 6–8; phụ trách chính Bài thực hành 2, 4 và 5; tự làm Bài 1 và 3 để hiểu phần của Tú.
+- **Trạng thái:** Chưa xác nhận hoàn thành.
+- **Ngày tự thực hiện:** Chưa ghi nhận.
+- **Kết quả tự thực hiện:** Chưa ghi nhận.
+- **Bằng chứng:** Chưa cung cấp.
+- **Xác nhận của thành viên:** Chưa có.
 
-- Mỗi sinh viên tự ghi phần việc và xác nhận dòng của mình; chỉ ghi vai trò nhóm sau khi hai thành viên thống nhất.
-- Dùng SHA commit hoặc đường dẫn tệp làm bằng chứng cho thay đổi mã/tài liệu; commit thể hiện trạng thái repository nhưng không tự chứng minh ai đã thực hiện thao tác.
-- Ghi thực hành cá nhân bằng ngày, yêu cầu đã làm, kết quả và người xác nhận; không ghi như đã làm nếu chưa thực hiện.
-- Rà lại phần này trước khi nộp. Các ô còn trống nghĩa là chưa có minh chứng cá nhân, không phải công việc đã hoàn tất.
+| Ngày | Tiêu chí/bài | Việc Tài tự làm | Kết quả Tài tự giải thích | Bằng chứng do Tài cung cấp | Xác nhận của Tài |
+|---|---|---|---|---|---|
+|  |  |  |  |  |  |
+
+## Hỗ trợ tài liệu do Codex chuẩn bị
+
+Codex đã chuẩn bị bảng phân công, hướng dẫn bắt đầu và bài thực hành để nhóm sử dụng. Đây là hỗ trợ cho dự án, **không phải bằng chứng Tú hoặc Tài đã tự chạy notebook, thực hành hay trả lời vấn đáp**.
+
+## Cách ghi nhận
+
+1. Sinh viên tự ghi ngày, tiêu chí/bài, thao tác đã làm và kết quả mình hiểu được.
+2. Dẫn tệp, lệnh hoặc ảnh chụp đã lược bỏ thông tin nhạy cảm. Không chụp hoặc gửi bình luận thật, token hay đường dẫn chứa thông tin cá nhân.
+3. Để thành viên tự xác nhận dòng của mình. Commit chỉ chứng minh trạng thái tệp, không tự chứng minh ai đã thao tác.
+4. Nếu chưa làm, để trạng thái **Chưa xác nhận hoàn thành**; không đánh dấu hoàn tất dựa trên phân công hoặc kết quả chung của nhóm.

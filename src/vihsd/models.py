@@ -36,8 +36,12 @@ class NumpyMultinomialNB(ClassifierMixin, BaseEstimator):
 
     def fit(self, X, y):
         """Uoc luong xac suat lop va dac trung, khong dense hoa X."""
-        if self.alpha <= 0:
-            raise ValueError("alpha phai lon hon 0")
+        try:
+            alpha = float(self.alpha)
+        except (TypeError, ValueError) as error:
+            raise ValueError("alpha phai la so huu han lon hon 0") from error
+        if not np.isfinite(alpha) or alpha <= 0:
+            raise ValueError("alpha phai la so huu han lon hon 0")
         X, y = check_X_y(X, y, accept_sparse="csr", dtype=np.float64)
         if sparse.issparse(X):
             if np.any(X.data < 0):
@@ -57,7 +61,7 @@ class NumpyMultinomialNB(ClassifierMixin, BaseEstimator):
             ]
         )
 
-        smoothed = self.feature_count_ + float(self.alpha)
+        smoothed = self.feature_count_ + alpha
         self.feature_log_prob_ = np.log(smoothed) - np.log(smoothed.sum(axis=1))[:, None]
         if self.fit_prior:
             self.class_log_prior_ = np.log(self.class_count_ / self.class_count_.sum())

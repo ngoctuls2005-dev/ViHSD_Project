@@ -11,7 +11,7 @@ Huấn luyện và so sánh mô hình phân loại ba nhãn ViHSD bằng baselin
 | A. Khởi tạo | Chốt rubric, nguồn tham khảo, phân công và hướng dẫn tự học | Tài liệu nói rõ việc của từng người; trạng thái cá nhân vẫn chờ xác nhận |
 | B. Mô hình | Dummy majority; NB NumPy; NB scikit-learn; Logistic Regression; Linear SVC | NB NumPy xử lý sparse và xác suất/dự đoán khớp scikit-learn trên fixture |
 | C. Pipeline/CV | Chuẩn hóa → PyVi/TF-IDF → classifier; 3-fold stratified và stratified-group | Vectorizer fit riêng trong từng fold; ghi số group giao giữa fold; không tuyên bố hết leakage nếu còn giao |
-| D. Thực nghiệm | CV trên Train; so sánh Validation; khóa mô hình theo Macro F1 Validation; Test chính thức và phép nhạy cảm không giao văn bản Train | Test không ảnh hưởng lựa chọn; lưu chỉ số tổng hợp, không lưu text/dự đoán theo dòng |
+| D. Thực nghiệm | Development mặc định chỉ tải Train/Validation, chạy CV trên Train và chọn theo Validation. Final-test là lệnh riêng cần cấu hình đã khóa | Development không đọc nhãn Test hoặc ghi vào kết quả Test; kết quả mỗi mode/feature nằm ở thư mục mới; Test không ảnh hưởng lựa chọn |
 | E. Phân tích | Metrics từng lớp, confusion matrix, chênh lệch Train–Validation, biểu đồ | Nhận xét dựa trên số thật; ghi hạn chế trùng nội dung và nhãn xung đột |
 | F. Báo cáo/cá nhân | Báo cáo, Notebook, câu hỏi vấn đáp và thực hành | Mỗi sinh viên tự chạy, giải thích và lưu minh chứng; không suy ra từ commit Codex |
 
@@ -21,10 +21,12 @@ Tạo môi trường và cài thư viện theo README. Sau khi đã có dữ li�
 
 ```powershell
 python -m pytest -q tests
-python scripts/run_exam2_experiments.py --features word --cv-folds 3
+python scripts/run_exam2_experiments.py --mode development --features word --cv-folds 3
 ```
 
-Lượt khởi đầu dùng word TF-IDF để giảm thời gian. Có thể chạy `--features combined` sau khi pipeline cơ bản ổn định; lựa chọn cuối phải được chốt bằng Validation. `--skip-group-cv` chỉ dùng khi cần chạy thử nhanh và phải ghi rõ việc bỏ qua.
+Lệnh và CLI mặc định ở chế độ `development`: chỉ dùng Train, CV và Validation. Mỗi lượt ghi vào thư mục mới dưới `reports/exam2_results/development/<feature>/<run-id>/`; các cấu hình word/combined có thư mục khác nhau. `--skip-group-cv` bỏ grouped CV và cần được ghi rõ khi báo cáo.
+
+Chế độ `final-test` không dành cho bài thực hành. Chỉ gọi riêng sau khi đã khóa lựa chọn bằng Validation và truyền `--locked-config <selection.json>`; nó chỉ đánh giá cấu hình đó, không chọn lại. Kết quả được ghi vào `reports/exam2_results/final-test/<feature>/<model>/<run-id>/`, không ghi đè baseline cũ.
 
 ## Dữ liệu và quy tắc chống rò rỉ
 
@@ -32,7 +34,7 @@ Lượt khởi đầu dùng word TF-IDF để giảm thời gian. Có thể ch�
 - Fit chuẩn hóa không học thống kê; fit TF-IDF trong từng fold trên phần train của fold.
 - StratifiedKFold giúp phân bố lớp ổn định nhưng có thể để văn bản trùng đi qua fold.
 - StratifiedGroupKFold gán cùng khóa văn bản chuẩn hóa vào một fold. Nêu số group xung đột và xác nhận số group giao bằng 0.
-- Chọn mô hình theo macro F1 Validation. Sau khi khóa lựa chọn, dùng Test chính thức một lần và báo thêm phép nhạy cảm đã định nghĩa bằng văn bản Train/Test, không dùng nhãn Test để tạo mask.
+- Chọn mô hình theo Macro F1 Validation. Lệnh Development không nạp Test. Quy trình final-test riêng có thể được dùng sau khi khóa cấu hình; không dùng nhãn Test để chọn mô hình, tiền xử lý hoặc tạo mask.
 - Không xóa/sửa dữ liệu gốc, nhãn hay split.
 
 ## Trạng thái cá nhân

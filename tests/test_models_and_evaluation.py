@@ -54,8 +54,20 @@ class ModelAndEvaluationTests(unittest.TestCase):
     def test_numpy_naive_bayes_rejects_negative_values_and_bad_alpha(self):
         with self.assertRaisesRegex(ValueError, "khong am"):
             NumpyMultinomialNB().fit(csr_matrix([[1.0, -0.1], [0.0, 1.0]]), [0, 1])
-        with self.assertRaisesRegex(ValueError, "alpha"):
-            NumpyMultinomialNB(alpha=0).fit(csr_matrix([[1.0], [0.0]]), [0, 1])
+        for alpha in (0, -1, np.nan, np.inf, -np.inf):
+            with self.subTest(alpha=alpha):
+                with self.assertRaisesRegex(ValueError, "alpha"):
+                    NumpyMultinomialNB(alpha=alpha).fit(
+                        csr_matrix([[1.0], [0.0]]), [0, 1]
+                    )
+
+    def test_numpy_naive_bayes_zero_vectors_use_class_priors(self):
+        model = NumpyMultinomialNB(alpha=1.0).fit(
+            csr_matrix((3, 4), dtype=np.float64), [0, 0, 1]
+        )
+        probabilities = model.predict_proba(csr_matrix((2, 4), dtype=np.float64))
+        np.testing.assert_allclose(probabilities, [[2 / 3, 1 / 3]] * 2)
+        np.testing.assert_array_equal(model.predict(csr_matrix((2, 4))), [0, 0])
 
     def test_text_pipeline_fits_vocabulary_from_train_only(self):
         pipeline = build_text_pipeline(MultinomialNB(), feature_mode="word")
@@ -126,6 +138,15 @@ class ModelAndEvaluationTests(unittest.TestCase):
         notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
         code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
         self.assertTrue(code_cells)
+        all_code = "\n".join(
+            "".join(cell["source"])
+            if isinstance(cell["source"], list)
+            else cell["source"]
+            for cell in code_cells
+        )
+        self.assertNotIn("test_texts", all_code)
+        self.assertNotIn("test_y", all_code)
+        self.assertIn("splits=DEVELOPMENT_SPLITS", all_code)
         for cell in code_cells:
             self.assertEqual(cell["outputs"], [])
             self.assertIsNone(cell["execution_count"])
@@ -149,9 +170,11 @@ class ModelAndEvaluationTests(unittest.TestCase):
                     exec(compile(source, f"exam2_notebook_fixture_{index}", "exec"), namespace)
             self.assertIn(namespace["selected_model"], namespace["estimators"])
             self.assertEqual(len(namespace["cv_folds"]), 30)
-            self.assertEqual(
-                namespace["test_summary"].iloc[0]["evaluation"], "official_test"
-            )
+            self.assertNotIn("test_texts", namespace)
+            self.assertNotIn("test_y", namespace)
+            self.assertNotIn("test_summary", namespace)
+            if "frames" in namespace:
+                self.assertEqual(set(namespace["frames"]), {"train", "validation"})
         finally:
             os.chdir(prior_directory)
             for name, value in previous_values.items():

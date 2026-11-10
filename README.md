@@ -34,7 +34,7 @@ Yêu cầu Python 3.10 trở lên. Trên Windows PowerShell:
 py -3 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -e .
-python -m pip install -r requirements-data.txt
+python -m pip install -r requirements-dev.txt
 ```
 
 Nếu chưa xác thực Hugging Face, chạy `hf auth login` và nhập token trực tiếp tại lời nhắc cục bộ; không gửi token qua hội thoại hoặc lưu token trong dự án. Sau đó chạy:
@@ -52,27 +52,29 @@ Notebook [`notebooks/exam1_practice.ipynb`](notebooks/exam1_practice.ipynb) mặ
 Chạy unit test:
 
 ```powershell
-python -m unittest discover -s tests -v
+python -m pytest -q tests
 ```
 
 Kiểm thử tích hợp dữ liệu thật được bật riêng, cần phiên Hugging Face có quyền:
 
 ```powershell
 $env:VIHSD_RUN_INTEGRATION = "1"
-python -m unittest discover -s tests -v
+python -m pytest -q tests
 ```
 
 Notebook và kiểm thử của Bài kiểm tra 1 không huấn luyện bộ phân loại. Baseline Tuần 6 được mô tả riêng ở mục dưới. Không công khai `data/raw/`, các bảng chứa từ/cụm từ trích từ bình luận, hay notebook có output bình luận thật.
 
-## Chạy thực nghiệm Bài kiểm tra 2
+## Chạy thực nghiệm Development Bài kiểm tra 2
 
-Sau khi tải dữ liệu thật và xác minh phiên bản, chạy ba fold trên Train, so sánh trên Validation, khóa mô hình theo Macro F1 Validation rồi mới đánh giá Test:
+CLI mặc định chạy Development: chỉ tải Train/Validation, chạy CV trên Train và so sánh Validation. Mỗi lượt ghi vào thư mục mới, phân biệt theo chế độ và loại đặc trưng; không ghi đè kết quả cũ. Lệnh an toàn trên dữ liệu thật:
 
 ```powershell
-python scripts/run_exam2_experiments.py --features word --cv-folds 3
+python scripts/run_exam2_experiments.py --mode development --features word --cv-folds 3
 ```
 
-Script mặc định chạy cả StratifiedKFold và StratifiedGroupKFold theo khóa văn bản chuẩn hóa. Để rút ngắn lượt thử ban đầu, có thể thêm `--skip-group-cv`; phải ghi rõ khi báo cáo. `--features combined` bật word và character TF-IDF. Kết quả chỉ chứa metrics, ma trận nhầm lẫn, biểu đồ và metadata tổng hợp trong `reports/exam2_results/`; không ghi bình luận hay dự đoán từng dòng. Chỉ chấm Test sau khi khóa lựa chọn theo Validation; không dùng kết quả Test để đổi pipeline hoặc mô hình.
+Script chạy cả StratifiedKFold và StratifiedGroupKFold theo khóa văn bản chuẩn hóa. `--features combined` chạy word và character TF-IDF vào thư mục riêng. Kết quả chỉ chứa metrics, ma trận nhầm lẫn Validation, biểu đồ và metadata tổng hợp; không ghi bình luận hoặc dự đoán theo dòng. Notebook Tuần 6 và hướng dẫn thực hành chỉ dùng Development hoặc fixture.
+
+Chế độ `final-test` không mặc định. Nó yêu cầu `--locked-config` đã được chọn theo Validation từ trước và ghi kết quả vào thư mục riêng, mới; không chọn lại mô hình. Không dùng chế độ đó trong thực hành hoặc để thay đổi cấu hình.
 
 Các mô hình: Dummy majority, MultinomialNB NumPy, MultinomialNB scikit-learn, Logistic Regression và Linear SVM. Đây là cấu hình khởi đầu, không phải kết luận mô hình cuối cho Bài kiểm tra 2.
 

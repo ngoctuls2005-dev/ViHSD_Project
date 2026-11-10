@@ -15,48 +15,50 @@ Các gợi ý là khung học tập, không phải câu trả lời thay sinh vi
 9. Vì sao TF-IDF phải fit lại trong từng train fold? Điều gì rò rỉ nếu fit trước CV?
 10. StratifiedKFold và StratifiedGroupKFold khác gì? Vì sao nhóm dùng cả hai?
 11. Tại sao dùng Validation để chọn mô hình và chỉ chấm Test sau khi khóa lựa chọn?
-12. Đọc một hàng confusion matrix: lớp nào bị nhầm sang lớp nào? Nêu giới hạn do 80 nhóm giao Train–Test có xung đột nhãn.
+12. Đọc một hàng confusion matrix Validation: lớp nào bị nhầm sang lớp nào? Nêu giới hạn do văn bản lặp và nhóm có nhãn xung đột.
 13. Chênh lệch Train–Validation Macro F1 gợi ý điều gì? Vì sao chưa đủ để kết luận overfit?
 14. Vì sao PhoBERT là hướng nghiên cứu tiếp theo nhưng không được đưa vào lượt baseline Tuần 6?
 
 ## Năm bài thực hành ngắn
 
-### Bài 1 – Đổi alpha của NB
+Tất cả bài chỉ dùng fixture hoặc Development (Train/CV/Validation); không nạp hay đọc nhãn Test. Mỗi bài dự kiến 10–15 phút.
 
-**Yêu cầu:** Đổi `alpha` từ 1.0 sang 0.5 trên fixture hoặc Train/CV.
+### Bài 1 – Tú: thay `alpha` của Naive Bayes
 
-**Thao tác:** Sửa cấu hình NB, chạy lại cùng folds và seed.
+**Yêu cầu:** Đổi `alpha` của `multinomial_nb_numpy` từ 1.0 thành 0.5.
 
-**Giải thích:** Alpha tăng làm làm trơn mạnh hơn; so sánh Macro F1 từng lớp và không chọn bằng Test.
+**Thao tác:** Trong Notebook, gọi `estimators["multinomial_nb_numpy"].set_params(alpha=0.5)` trước khi chạy cell Validation; chạy lại cùng fixture hoặc cùng split Development.
 
-### Bài 2 – Đọc confusion matrix
+**Giải thích:** `alpha` làm trơn số đếm đặc trưng; nêu chỉ số Validation Macro F1 và F1 từng lớp đã thay đổi ra sao, không kết luận từ một tham số đơn lẻ.
 
-**Yêu cầu:** Tìm ô nhầm lớn nhất ngoài đường chéo trên Validation.
+### Bài 2 – Tú: baseline và confusion matrix
 
-**Thao tác:** Lọc các hàng trong `validation_confusion_matrix.csv` có `true_label != predicted_label`.
+**Yêu cầu:** Giải thích Dummy most-frequent và tìm một lỗi ngoài đường chéo của confusion matrix Validation.
 
-**Giải thích:** Nêu cặp lớp bị nhầm và vì sao tổng hợp này không cho phép trích bình luận gốc.
+**Thao tác:** Đọc hàng/cột của confusion matrix Validation, ghi tên nhãn và số lượng, không sao chép câu.
 
-### Bài 3 – Thay `class_weight`
+**Giải thích:** Phân biệt Accuracy cao do CLEAN chiếm đa số với Macro F1 ba lớp; mô tả ý nghĩa của một ô nhầm.
 
-**Yêu cầu:** So sánh `balanced` với `None` cho Logistic Regression trên Validation.
+### Bài 3 – Tài: lần theo Pipeline và `StratifiedGroupKFold`
 
-**Thao tác:** Đổi một tham số, fit lại trên Train, chỉ đọc Validation.
+**Yêu cầu:** Chỉ ra điểm fit vectorizer và cách group văn bản trùng được giữ cùng fold.
 
-**Giải thích:** Balanced tăng trọng số tương đối của lớp ít; kiểm tra precision/recall theo lớp và Macro F1.
+**Thao tác:** Lần theo `cross_validate_text_models`; đối chiếu số group giao fold trong bảng CV Development hoặc fixture.
 
-### Bài 4 – Kiểm tra group split
+**Giải thích:** Vectorizer chỉ fit trong fold Train; grouped split ngăn trùng chính xác vượt fold nhưng không loại bản gần giống hay giải quyết nhãn xung đột.
 
-**Yêu cầu:** Chứng minh các khóa văn bản trùng không đi qua cả train và validation trong grouped CV.
+### Bài 4 – Tài: thay `C` hoặc `class_weight`
 
-**Thao tác:** Đọc `cv_group_class_distribution.csv` và cột `duplicate_groups_crossing_fold`.
+**Yêu cầu:** Đổi đúng một tham số của Logistic Regression hoặc Linear SVC.
 
-**Giải thích:** StratifiedGroupKFold giữ group; nó không giải quyết bản gần giống hoặc nhãn xung đột.
+**Thao tác:** Dùng `set_params(C=0.5)` hoặc đổi `class_weight`, sau đó chạy lại CV trên Train và đánh giá Validation.
 
-### Bài 5 – Thêm chỉ số
+**Giải thích:** Mô tả thay đổi về Macro F1 và chỉ số theo lớp; giữ nguyên seed và dữ liệu để so sánh có ý nghĩa.
 
-**Yêu cầu:** Thêm Macro Recall vào bảng đọc kết quả (không thay đổi cách chọn đã khai báo).
+### Bài 5 – Tài: giải thích CV mean/std
 
-**Thao tác:** Dùng `classification_metrics` hoặc thêm phép tính trên Validation.
+**Yêu cầu:** So sánh mean và std Macro F1 của một mô hình giữa hai cách chia fold.
 
-**Giải thích:** Nêu mối quan hệ giữa recall từng lớp và recall trung bình; không đọc nhãn Test để điều chỉnh mô hình.
+**Thao tác:** Đọc `cv_summary.csv` của một lượt Development hoặc tính `mean`/`std` từ `cv_folds.csv`.
+
+**Giải thích:** Mean tóm tắt điểm trung bình theo fold; std cho biết độ dao động giữa fold, không phải khoảng tin cậy và không thay thế Validation.

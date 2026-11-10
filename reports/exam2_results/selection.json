@@ -1,0 +1,7 @@
+{
+  "model": "linear_svc_balanced",
+  "selection_metric": "validation_macro_f1",
+  "selection_value": 0.6183585082778631,
+  "feature_mode": "word",
+  "selected_before_test_evaluation": true
+}

@@ -10,10 +10,17 @@ Dự án môn Học máy nghiên cứu phân loại bình luận mạng xã hộ
 - [Năm bài thực hành](docs/practical_exercises.md)
 - [Nhật ký đóng góp cá nhân](docs/contributions.md)
 - [Báo cáo Bài kiểm tra 1](reports/exam1_report.md)
+- [Kế hoạch Bài kiểm tra 2](docs/exam2_plan.md)
+- [Tài liệu nghiên cứu Bài kiểm tra 2](docs/exam2_research.md)
+- [Phân công Bài kiểm tra 2](docs/EXAM2_TEAM_ASSIGNMENTS.md)
+- [Hướng dẫn riêng cho Tú](docs/EXAM2_START_HERE_TU.md)
+- [Hướng dẫn riêng cho Tài](docs/EXAM2_START_HERE_TAI.md)
+- [Câu hỏi vấn đáp và thực hành Bài kiểm tra 2](docs/exam2_viva_questions.md)
+- [Báo cáo Bài kiểm tra 2](reports/exam2_report.md)
 
 ## Trạng thái
 
-Đang hoàn thành Bài kiểm tra 1 – tuần 4. Dữ liệu thật đã được tải và xác minh ở revision `88e81b36ca376867640dad9df295e0f7d499ab80`: 24.048 Train, 2.672 Validation và 6.680 Test. Báo cáo có thống kê, biểu đồ, kiểm tra chất lượng và TF-IDF thật. **Chưa huấn luyện mô hình**, đúng phạm vi bài kiểm tra. Kết quả chi tiết và các hạn chế nằm trong [báo cáo](reports/exam1_report.md) và [nhật ký tiến độ](docs/PROGRESS.md).
+Sản phẩm Bài kiểm tra 1 được dùng làm nền cho Bài kiểm tra 2 – tuần 6. Lượt baseline thật đã chạy trên nhánh `codex/exam2-week6`: 3-fold CV, so sánh Validation, khóa Linear SVC balanced theo Validation Macro F1 `0,6184`, sau đó Test Macro F1 `0,6017`. Kết quả grouped CV thấp hơn stratified CV, phù hợp rủi ro văn bản trùng đã ghi nhận. Đây chưa phải tối ưu cuối; chưa xác nhận sinh viên hoàn tất phần cá nhân hoặc vấn đáp. Xem [báo cáo Tuần 6](reports/exam2_report.md) và [nhật ký](docs/PROGRESS.md).
 
 Mức tham chiếu Macro F1 của chiến lược luôn dự đoán CLEAN là `0,302`, tính từ phân bố nhãn Train; đây là phép tính lý thuyết, không phải kết quả mô hình. Kiểm toán phát hiện 80 chuỗi giao Train–Test có xung đột nhãn; quy trình đánh giá bổ sung và giới hạn này được ghi trong báo cáo.
 
@@ -55,7 +62,19 @@ $env:VIHSD_RUN_INTEGRATION = "1"
 python -m unittest discover -s tests -v
 ```
 
-Không huấn luyện mô hình ở giai đoạn này. Không công khai `data/raw/`, các bảng chứa từ/cụm từ trích từ bình luận, hay notebook có output bình luận thật.
+Notebook và kiểm thử của Bài kiểm tra 1 không huấn luyện bộ phân loại. Baseline Tuần 6 được mô tả riêng ở mục dưới. Không công khai `data/raw/`, các bảng chứa từ/cụm từ trích từ bình luận, hay notebook có output bình luận thật.
+
+## Chạy thực nghiệm Bài kiểm tra 2
+
+Sau khi tải dữ liệu thật và xác minh phiên bản, chạy ba fold trên Train, so sánh trên Validation, khóa mô hình theo Macro F1 Validation rồi mới đánh giá Test:
+
+```powershell
+python scripts/run_exam2_experiments.py --features word --cv-folds 3
+```
+
+Script mặc định chạy cả StratifiedKFold và StratifiedGroupKFold theo khóa văn bản chuẩn hóa. Để rút ngắn lượt thử ban đầu, có thể thêm `--skip-group-cv`; phải ghi rõ khi báo cáo. `--features combined` bật word và character TF-IDF. Kết quả chỉ chứa metrics, ma trận nhầm lẫn, biểu đồ và metadata tổng hợp trong `reports/exam2_results/`; không ghi bình luận hay dự đoán từng dòng. Chỉ chấm Test sau khi khóa lựa chọn theo Validation; không dùng kết quả Test để đổi pipeline hoặc mô hình.
+
+Các mô hình: Dummy majority, MultinomialNB NumPy, MultinomialNB scikit-learn, Logistic Regression và Linear SVM. Đây là cấu hình khởi đầu, không phải kết luận mô hình cuối cho Bài kiểm tra 2.
 
 ## Tài liệu dự án
 

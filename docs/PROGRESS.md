@@ -2,7 +2,7 @@
 
 ## Mục tiêu
 
-Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, trước khi bắt đầu huấn luyện mô hình. Không khẳng định đạt điểm cụ thể; chỉ đánh dấu tiêu chí hoàn tất khi có sản phẩm và bằng chứng kiểm chứng được.
+Hoàn thành trung thực Bài kiểm tra 1 – tuần 4 và Bài kiểm tra 2 – tuần 6. Nhóm đã cho phép bắt đầu huấn luyện theo phạm vi Tuần 6. Không khẳng định đạt điểm cụ thể; chỉ đánh dấu mục đã làm khi có sản phẩm và bằng chứng kiểm chứng được. Vấn đáp và thao tác cá nhân cần xác nhận trực tiếp từ từng sinh viên/giảng viên.
 
 ## Trạng thái tổng quan
 
@@ -10,8 +10,9 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Điểm bắt đầu: commit `2f3d61c707359c824921013813f484abcea9ca6c` (`Initial commit`), chỉ có README và `.gitignore`.
 - Commit tham chiếu cho lượt rà soát cuối: `50a172ff7c733c91846ab53935dd62cb6d0fe42e`.
 - Trạng thái dữ liệu: đã xác thực Hugging Face, tải và xác minh `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; bản gốc nằm trong `data/raw/uitnlp_vihsd/` và bị Git bỏ qua. Schema là `free_text:string`, `label_id:int64`; ba split có tổng 33.400 dòng. Metadata license MIT và ghi chú tác giả “chỉ dùng cho nghiên cứu” chưa được đối chiếu; không tái phân phối dữ liệu.
-- Trạng thái mô hình: chưa huấn luyện, đúng phạm vi Bài kiểm tra 1.
-- Cập nhật gần nhất: 2026-10-29.
+- Trạng thái mô hình: Bài kiểm tra 1 không huấn luyện; Bài kiểm tra 2 đã có lượt baseline thật đầu tiên ngày 2026-11-10.
+- Cập nhật gần nhất: 2026-11-10.
+- Trạng thái hiện tại (2026-11-10): đã hoàn tất lượt baseline Tuần 6 trên nhánh `codex/exam2-week6`; kết quả, kiểm thử và giới hạn được ghi ở phần nhật ký bên dưới. Chưa có xác nhận hoàn thành cá nhân Tuần 6.
 
 ## Kế hoạch theo giai đoạn
 
@@ -55,7 +56,30 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, năm bài thực hành, bảng phân công và hướng dẫn riêng cho từng thành viên đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; ngày/kết quả thực hành và xác nhận cá nhân của sinh viên vẫn cần bổ sung.
 
+## Giai đoạn 6 – Bài kiểm tra 2, tuần 6
+
+**Phạm vi:** lựa chọn và giải thích thuật toán, baseline, Pipeline không rò rỉ, CV trên Train, so sánh Validation, khóa cấu hình trước Test, phân tích lỗi. Không tìm kiếm siêu tham số quy mô lớn hoặc làm nội dung Tuần 8.
+
+**Dữ liệu:** kế thừa `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; Train 24.048, Validation 2.672, Test 6.680; giữ nguyên mã nhãn và split chính thức. Dữ liệu nằm ngoài Git.
+
+**Điều kiện hoàn tất kỹ thuật:** Dummy và bốn classifier chạy được; NB NumPy đối chiếu scikit-learn trên sparse; Pipeline fit TF-IDF trong từng fold; CV phân tầng và CV theo nhóm được báo riêng; chọn theo Validation trước khi chấm Test; không lưu nội dung bình luận.
+
+**Điều kiện hoàn tất cá nhân:** Tú và Tài phải tự chạy/chỉnh sửa một thao tác, giải thích mô hình và kết quả; Codex không ghi nhận thay việc này.
+
 ## Nhật ký tiến độ
+
+### 2026-11-10 – Khởi động và chạy baseline Tuần 6
+
+- Rà soát mã nguồn Tuần 4, rubric `TEC/Evaluation_Criteria.md`, trạng thái Git, dữ liệu cục bộ và môi trường Python. Branch `codex/exam2-week6` được tạo từ `58d0c12ca7b07dca186508e859984eb33456274`; các hồ sơ PDF/TeX/ảnh người dùng chưa theo dõi được giữ nguyên.
+- HF CLI đã xác thực với tài khoản hiện có; không đọc/ghi token. Dữ liệu cục bộ có provenance trùng revision yêu cầu và schema/size đã ghi nhận ở Tuần 4.
+- Đã thêm NB NumPy sparse; Pipeline chuẩn hóa + PyVi/TF-IDF + Dummy, NB, Logistic Regression, Linear SVC; CV metrics/nhóm; script chạy; tài liệu A–F; Notebook thực hành và bài vấn đáp.
+- Kiểm thử đầu tiên phần mới: `python -m pytest -q tests/test_models_and_evaluation.py` → 7 passed. Toàn bộ trước khi bật tích hợp → 30 passed, 2 skipped. Có thêm kiểm thử Notebook fixture sau đó.
+- Chạy kiểm thử cuối sau các sửa đổi: `$env:MPLBACKEND='Agg'; $env:VIHSD_RUN_INTEGRATION='1'; python -m pytest -q tests` → **33 passed in 36.58s**, gồm tích hợp dữ liệu thật và Notebook fixture.
+- Xác minh provenance `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; counts 24.048/2.672/6.680, schema và nhãn 0/1/2 hợp lệ.
+- Thực nghiệm word TF-IDF 166.981 chiều, 3 folds, seed 42. CV Macro F1 SVC: StratifiedKFold `0,6262 ± 0,0049`, grouped `0,6117 ± 0,0078`. Trong Train có 22.500 nhóm khóa cho 24.048 dòng, 1.548 lặp dư, 132 nhóm xung đột nhãn. Stratified CV trung bình 681,7 nhóm đi qua train/validation mỗi fold; grouped CV bằng 0.
+- Validation chọn `linear_svc_balanced` theo Macro F1 `0,6184`, trước khi đọc nhãn Test. Test chính thức: Macro F1 `0,6017`, Accuracy `0,8618`; Test sensitivity không giao khóa Train: 5.866 dòng còn lại, Macro F1 `0,5926`, Accuracy `0,8560`. Lỗi chính: OFFENSIVE recall `0,2365`; có 243 OFFENSIVE và 252 HATE bị dự đoán thành CLEAN.
+- Script đã tạo và kiểm tra các kết quả tổng hợp an toàn ở `reports/exam2_results/`. Lượt chạy lưu đầy đủ kết quả rồi lỗi ở thông báo cuối do encoding console; đã sửa encoding. Không chạy lại toàn bộ script sau sửa vì Test đã được chấm một lần; kiểm tra CLI, compile, toàn bộ kiểm thử và Notebook fixture đạt sau sửa.
+- Chưa chạy combined word+char; chưa tìm kiếm siêu tham số; chưa huấn luyện PhoBERT; chưa xác nhận Tuần 6 cá nhân của Tú/Tài; tiêu chí vấn đáp/thực hành vẫn cần sinh viên và giảng viên.
 
 > Các ghi chú ngày 2026-10-23 dưới đây là ảnh chụp lịch sử khi chưa có quyền truy cập. Chúng được cập nhật bởi trạng thái và bằng chứng ngày 2026-10-29, không mô tả trạng thái hiện tại.
 

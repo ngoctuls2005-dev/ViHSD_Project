@@ -2,10 +2,12 @@
 
 ## Mục tiêu và phạm vi
 
-- Ưu tiên hoàn thành trung thực Bài kiểm tra 1 theo rubric của học phần.
-- Thực hiện theo năm giai đoạn trong `docs/PROGRESS.md`; cập nhật trạng thái và bằng chứng sau mỗi giai đoạn.
-- Không huấn luyện hoặc tối ưu mô hình trước khi tất cả tiêu chí Bài kiểm tra 1 hoàn tất và được kiểm chứng.
+- Hoàn thiện trung thực Bài kiểm tra 1 và Bài kiểm tra 2 theo rubric của học phần.
+- Theo dõi các giai đoạn trong `docs/PROGRESS.md`; cập nhật trạng thái và bằng chứng sau mỗi phần việc.
+- Bài kiểm tra 2 đã được nhóm cho phép bắt đầu từ ngày 2026-11-10; có thể huấn luyện các mô hình cơ sở trong phạm vi tuần 6.
+- Không thực hiện tìm kiếm siêu tham số rộng, tối ưu sâu hoặc cải tiến thuộc Bài kiểm tra 3 khi chưa được giao.
 - Không tự nhận dự án đạt điểm tối đa; điểm do giảng viên đánh giá.
+- Mã do Codex tạo/chạy không phải minh chứng sinh viên đã tự thực hành, vấn đáp hoặc đóng góp cá nhân.
 
 ## Dữ liệu và tính trung thực
 
@@ -22,6 +24,10 @@
 - Chia dữ liệu trước mọi phép biến đổi có học thống kê. Chỉ `fit` vectorizer/biến đổi trên Train; chỉ `transform` Validation/Test.
 - Không dùng Test để chọn đặc trưng, ngưỡng hoặc tham số.
 - Dùng F1 Macro làm chỉ số chính đã định trước; báo cáo chỉ số từng lớp và giải thích ảnh hưởng của mất cân bằng.
+- Với Bài kiểm tra 2, đặt bước chuẩn hóa và TF-IDF trong Pipeline; fit lại TF-IDF chỉ trên phần Train của từng fold.
+- Chọn mô hình/cấu hình bằng Train và Validation; khóa lựa chọn trước khi chấm Test chính thức.
+- Do ViHSD có văn bản trùng, báo cả StratifiedKFold và đánh giá theo nhóm văn bản nếu khả thi; nói rõ giới hạn từng kết quả.
+- Chỉ ghi kết quả tổng hợp an toàn; không xuất bình luận, văn bản dự đoán từng dòng hoặc ví dụ có thể khôi phục dữ liệu.
 
 ## Mã và tài liệu
 
@@ -30,6 +36,7 @@
 - Chú thích trong mã bằng tiếng Việt không dấu. README, báo cáo và hướng dẫn học tập bằng tiếng Việt có dấu.
 - Cố định `random_state` ở nơi có yếu tố ngẫu nhiên.
 - Nêu thư viện và lệnh chạy rõ ràng trong `requirements.txt`/README khi mã nguồn được thêm.
+- Chú thích mới trong Python dùng tiếng Việt không dấu.
 - Mọi biểu đồ, bảng và nhận xét định lượng phải được tạo từ dữ liệu đã kiểm chứng; không dùng số liệu minh họa như kết quả nghiên cứu.
 
 ## Kiểm thử và Git

@@ -120,4 +120,36 @@ SHA-256 của các tệp Test/baseline đầu ra trước và sau đều trùng:
 
 ## 9. Khai báo sử dụng AI
 
-Trong phạm vi lịch sử công việc đã ghi nhận cho dự án, **Codex GPT-6 Luna** đã hỗ trợ thiết kế quy trình, lập trình, kiểm thử, chạy thực nghiệm và soạn/chỉnh sửa tài liệu. Các kết quả thực nghiệm được nêu ở trên tạo từ dữ liệu ViHSD thật và các lệnh đã lưu; lượt sửa an toàn hiện tại chỉ chạy Development. AI không thay cho việc học, giải thích, thực hành cá nhân hoặc đánh giá của giảng viên. Báo cáo chưa khẳng định Tú hay Tài đã rà soát hoặc xác nhận khai báo này; hai thành viên cần đọc, sửa nếu cần và tự xác nhận trước khi nộp.
+Trong phạm vi lịch sử công việc đã ghi nhận cho dự án, **Codex GPT-6 Luna** đã hỗ trợ thiết kế quy trình, lập trình, kiểm thử, chạy thực nghiệm và soạn/chỉnh sửa tài liệu. Các kết quả thực nghiệm được nêu ở trên tạo từ dữ liệu ViHSD thật và các lệnh đã lưu; lượt sửa an toàn hiện tại chỉ chạy Development. AI không thay cho việc học, giải thích, thực hành cá nhân hoặc đánh giá của giảng viên.
+
+**Xác nhận của thành viên nhóm (ngày 2026-11-11):**
+
+Các dòng dưới đây ghi nhận nội dung tự xác nhận do nhóm gửi; đây không phải quan sát độc lập về thao tác hoặc vấn đáp.
+
+- **Hoàng Ngọc Tú:** Đã đọc kỹ mục 9, tự thực hành bài tập Naive Bayes (`alpha=0.5`), kiểm chứng baseline Dummy và confusion matrix Validation, và tự xác nhận nội dung khai báo sử dụng AI này.
+- **Lê Quang Tài:** Đã đọc kỹ mục 9, tự thực hành Pipeline, `StratifiedGroupKFold`, đổi tham số `C=0.5` cho Linear SVC / Logistic Regression, giải thích CV mean/std, và tự xác nhận nội dung khai báo sử dụng AI này.
+*(Điểm số và đánh giá mức độ hiểu biết do giảng viên phụ trách học phần đánh giá trực tiếp qua buổi vấn đáp).*
+
+## 10. Thực hành cá nhân Tuần 6 – tự báo cáo
+
+Ngày 2026-11-11, Tú tự báo cáo đã đổi `alpha` NumPy NB từ `1.0` sang `0.5`, giải thích baseline và đọc confusion matrix Validation. Tài tự báo cáo đã lần theo Pipeline/grouped CV, đổi `C` của Linear SVC và Logistic Regression từ `1.0` sang `0.5`, giải thích CV mean/std. Các số dưới đây được Codex tái lập riêng trên Train/Validation của revision ghi ở mục 1; việc tự thao tác của từng người vẫn là tự xác nhận.
+
+| Thực hành | Cấu hình | Train Macro F1 | Validation Macro F1 | Validation F1 (CLEAN / OFFENSIVE / HATE) |
+|---|---|---:|---:|---:|
+| Tú – NumPy NB | `alpha=1.0` | 0,3118 | 0,3029 | 0,9012 / 0 / 0,0074 |
+| Tú – NumPy NB | `alpha=0.5` | 0,4561 | 0,3127 | 0,9023 / 0 / 0,0357 |
+| Tài – Logistic Regression | `C=1.0` | 0,9167 | 0,6049 | 0,8986 / 0,3948 / 0,5214 |
+| Tài – Logistic Regression | `C=0.5` | — | 0,5884 | 0,8853 / 0,3842 / 0,4956 |
+| Tài – Linear SVC | `C=1.0` | 0,9831 | 0,6184 | 0,9339 / 0,3333 / 0,5878 |
+| Tài – Linear SVC | `C=0.5` | — | 0,6134 | 0,9315 / 0,3333 / 0,5754 |
+
+Với `alpha=0.5`, confusion matrix Validation của NB có OFFENSIVE→CLEAN 208, OFFENSIVE→HATE 4, HATE→CLEAN 265 và CLEAN→HATE 1. Confusion matrix SVC cấu hình `C=1.0` được liên kết ở mục 4. CV 3-fold của hai mô hình tuyến tính:
+
+| Mô hình | C | Stratified Macro F1 mean ± std | Grouped Macro F1 mean ± std |
+|---|---:|---:|---:|
+| Linear SVC | 1,0 | 0,6262 ± 0,0050 | 0,6117 ± 0,0078 |
+| Linear SVC | 0,5 | 0,6273 ± 0,0050 | 0,6110 ± 0,0065 |
+| Logistic Regression | 1,0 | 0,6082 ± 0,0024 | 0,5935 ± 0,0081 |
+| Logistic Regression | 0,5 | 0,5922 ± 0,0014 | 0,5815 ± 0,0062 |
+
+Các giá trị `C=1.0` lấy từ lượt Development đã lưu ngày 2026-11-10; `C=0.5` được tái lập trên Train với seed 42. Bảng nhật ký có [chi tiết tự giải thích và nguồn tự báo cáo](../docs/contributions.md). Các lần thực hành này không nạp hoặc dùng nhãn Test để chọn tham số. Giảng viên vẫn cần đánh giá trực tiếp phần vấn đáp theo rubric.

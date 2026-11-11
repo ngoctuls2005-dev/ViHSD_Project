@@ -8,9 +8,9 @@
 
 | Thành viên | Phụ trách chính | Sản phẩm cần tự kiểm tra | Trạng thái cá nhân |
 |---|---|---|---|
-| Hoàng Ngọc Tú | Lý giải thuật toán; Dummy baseline; NB NumPy và đối chiếu scikit-learn; phân tích metrics/confusion/error; tổng hợp báo cáo | `src/vihsd/models.py`, `src/vihsd/model_evaluation.py`, `reports/exam2_report.md` | Chưa xác nhận hoàn thành Tuần 6 |
-| Lê Quang Tài | Pipeline, PyVi/TF-IDF, Logistic Regression/Linear SVC, CV, kiểm tra leakage, script và khả năng chạy lại | `src/vihsd/models.py`, `src/vihsd/experiment.py`, `scripts/run_exam2_experiments.py` | Chưa xác nhận hoàn thành Tuần 6 |
-| Cả hai | Hiểu mọi mô hình, tự chạy chương trình, giải thích kết quả và thực hành tại chỗ | Notebook Tuần 6, `docs/exam2_viva_questions.md`, nhật ký cá nhân | Chờ từng sinh viên tự xác nhận; chưa có quan sát vấn đáp |
+| Hoàng Ngọc Tú | Lý giải thuật toán; Dummy baseline; NB NumPy và đối chiếu scikit-learn; phân tích metrics/confusion/error; tổng hợp báo cáo | `src/vihsd/models.py`, `src/vihsd/model_evaluation.py`, `reports/exam2_report.md` | Tú tự báo cáo hoàn thành bài thực hành Tuần 6 ngày 2026-11-11; chờ giảng viên đánh giá vấn đáp |
+| Lê Quang Tài | Pipeline, PyVi/TF-IDF, Logistic Regression/Linear SVC, CV, kiểm tra leakage, script và khả năng chạy lại | `src/vihsd/models.py`, `src/vihsd/experiment.py`, `scripts/run_exam2_experiments.py` | Tài tự báo cáo hoàn thành bài thực hành Tuần 6 ngày 2026-11-11; chờ giảng viên đánh giá vấn đáp |
+| Cả hai | Hiểu mọi mô hình, tự chạy chương trình, giải thích kết quả và thực hành tại chỗ | Notebook Tuần 6, `docs/exam2_viva_questions.md`, nhật ký cá nhân | Cả hai tự báo cáo đã hoàn tất bài thực hành và đã xác nhận khai báo AI (2026-11-11); chưa có quan sát vấn đáp trực tiếp của GV |
 
 ## Cách bàn giao minh chứng
 

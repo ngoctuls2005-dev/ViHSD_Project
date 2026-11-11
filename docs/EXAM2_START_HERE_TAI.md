@@ -31,3 +31,15 @@ Tiêu chí 3–5 yêu cầu Pipeline không rò rỉ, chương trình chạy đ�
 ## Minh chứng cần ghi
 
 Ghi ngày tự làm, fixture hay Development, lệnh/cell, cấu hình `C` hoặc `class_weight`, file kết quả Validation/CV và cách diễn giải mean/std bằng lời của Tài. Không ghi nội dung bình luận, không đánh dấu hoàn thành nếu chưa tự làm và không gắn xác nhận giảng viên khi chưa có.
+
+## Trạng thái thực hành của Tài (ngày 2026-11-11)
+
+Các mục dưới đây ghi nhận theo phần Tài tự báo cáo ngày 2026-11-11. Codex đã tái lập các số liệu trên Train/Validation; việc ai trực tiếp thao tác và giải thích vẫn là tự xác nhận, chưa được quan sát độc lập. Phần vấn đáp chờ giảng viên đánh giá.
+
+- [x] Đã lần theo `src/vihsd/experiment.py` và `src/vihsd/model_evaluation.py`: kiểm chứng Pipeline và CV fit TF-IDF riêng từng fold trên phần Train của fold đó, ngăn ngừa rò rỉ dữ liệu.
+- [x] Đã giải thích nguyên lý và giới hạn của `StratifiedGroupKFold`: gom toàn bộ các chuỗi văn bản trùng lặp vào cùng một fold để tránh đánh giá quá lạc quan; nhận thức rõ giới hạn là chỉ gom được trùng chuỗi tuyệt đối sau chuẩn hóa, không gom được văn bản tương đồng ngữ nghĩa và 132 nhóm có nhãn xung đột.
+- [x] Đã chạy thử nghiệm đổi `C` từ `1.0` thành `0.5` cho `linear_svc_balanced` và `logistic_regression_balanced`: ghi lại kết quả 3-fold CV (Stratified và Grouped) cùng Validation Macro F1.
+- [x] Đã giải thích ý nghĩa CV mean và std: mean đo hiệu năng trung bình giữa các fold; std thể hiện độ phân tán/biến động giữa các lát cắt fold.
+- [x] Đã giải thích lý do không chọn mô hình/siêu tham số theo Test (tránh rò rỉ / snooping; bảo toàn tính khách quan của tập Test chính thức).
+- [x] Đã đọc và tự xác nhận khai báo AI ở mục 9 của báo cáo `reports/exam2_report.md`.
+*(Chờ giảng viên quan sát và đánh giá trực tiếp qua buổi vấn đáp).*

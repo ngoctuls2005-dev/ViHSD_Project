@@ -1,0 +1,34 @@
+{
+  "dataset": "uitnlp/vihsd",
+  "revision": "88e81b36ca376867640dad9df295e0f7d499ab80",
+  "splits": {
+    "train": 24048,
+    "validation": 2672,
+    "test": 6680
+  },
+  "feature_mode": "word",
+  "cv_schemes": [
+    "stratified",
+    "stratified_group"
+  ],
+  "cv_folds": 3,
+  "random_state": 42,
+  "cv_train_duplicate_groups": {
+    "rows": 24048,
+    "unique_text_groups": 22500,
+    "duplicate_excess_rows": 1548,
+    "conflicting_label_groups": 132
+  },
+  "feature_count": 166981,
+  "selection": {
+    "model": "linear_svc_balanced",
+    "selection_metric": "validation_macro_f1",
+    "selection_value": 0.6183585082778631,
+    "feature_mode": "word",
+    "selected_before_test_evaluation": true
+  },
+  "test_scored_once_after_selection": true,
+  "test_sensitivity_rows": 5866,
+  "test_sensitivity_removed_rows": 814,
+  "raw_text_or_per_row_predictions_written": false
+}

@@ -10,6 +10,7 @@ import unittest
 
 from datasets import load_dataset
 
+from vihsd.experiment import DEVELOPMENT_SPLITS, load_official_frames
 from vihsd.preprocessing import normalize_text
 from vihsd.quality import cross_split_duplicate_audit
 
@@ -19,6 +20,19 @@ from vihsd.quality import cross_split_duplicate_audit
     "Set VIHSD_RUN_INTEGRATION=1 khi tai khoan Hugging Face da duoc cap quyen",
 )
 class RealDatasetIntegrationTests(unittest.TestCase):
+    def test_development_loader_returns_only_train_and_validation(self):
+        project_root = Path(__file__).resolve().parents[1]
+        frames, revision = load_official_frames(
+            project_root / "data" / "raw" / "uitnlp_vihsd",
+            project_root / "data" / "raw" / "uitnlp_vihsd_provenance.json",
+            splits=DEVELOPMENT_SPLITS,
+        )
+        self.assertEqual(set(frames), {"train", "validation"})
+        self.assertNotIn("test", frames)
+        self.assertEqual(revision, "88e81b36ca376867640dad9df295e0f7d499ab80")
+        self.assertEqual(len(frames["train"]), 24048)
+        self.assertEqual(len(frames["validation"]), 2672)
+
     def test_official_splits_schema_and_label_codes(self):
         dataset = load_dataset(
             "uitnlp/vihsd",

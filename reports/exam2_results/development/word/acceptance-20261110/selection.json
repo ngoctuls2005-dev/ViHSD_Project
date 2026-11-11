@@ -1,0 +1,24 @@
+{
+  "experiment_mode": "development",
+  "model": "linear_svc_balanced",
+  "model_parameters": {
+    "C": 1.0,
+    "class_weight": "balanced",
+    "dual": "auto",
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "loss": "squared_hinge",
+    "max_iter": 1000,
+    "multi_class": "ovr",
+    "penalty": "l2",
+    "random_state": 42,
+    "tol": 0.0001,
+    "verbose": 0
+  },
+  "selection_metric": "validation_macro_f1",
+  "selection_value": 0.6183585082778631,
+  "feature_mode": "word",
+  "dataset_revision": "88e81b36ca376867640dad9df295e0f7d499ab80",
+  "random_state": 42,
+  "selected_before_test_evaluation": true
+}

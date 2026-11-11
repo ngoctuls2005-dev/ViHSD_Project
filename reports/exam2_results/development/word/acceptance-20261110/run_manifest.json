@@ -1,0 +1,50 @@
+{
+  "mode": "development",
+  "dataset": "uitnlp/vihsd",
+  "revision": "88e81b36ca376867640dad9df295e0f7d499ab80",
+  "splits_loaded": {
+    "train": 24048,
+    "validation": 2672
+  },
+  "feature_mode": "word",
+  "cv_schemes": [
+    "stratified",
+    "stratified_group"
+  ],
+  "cv_folds": 3,
+  "random_state": 42,
+  "cv_train_duplicate_groups": {
+    "rows": 24048,
+    "unique_text_groups": 22500,
+    "duplicate_excess_rows": 1548,
+    "conflicting_label_groups": 132
+  },
+  "feature_count": 166981,
+  "selection": {
+    "experiment_mode": "development",
+    "model": "linear_svc_balanced",
+    "model_parameters": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "dual": "auto",
+      "fit_intercept": true,
+      "intercept_scaling": 1,
+      "loss": "squared_hinge",
+      "max_iter": 1000,
+      "multi_class": "ovr",
+      "penalty": "l2",
+      "random_state": 42,
+      "tol": 0.0001,
+      "verbose": 0
+    },
+    "selection_metric": "validation_macro_f1",
+    "selection_value": 0.6183585082778631,
+    "feature_mode": "word",
+    "dataset_revision": "88e81b36ca376867640dad9df295e0f7d499ab80",
+    "random_state": 42,
+    "selected_before_test_evaluation": true
+  },
+  "test_data_loaded": false,
+  "test_evaluated": false,
+  "raw_text_or_per_row_predictions_written": false
+}

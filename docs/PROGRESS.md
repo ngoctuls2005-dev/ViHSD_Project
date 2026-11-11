@@ -2,7 +2,7 @@
 
 ## Mục tiêu
 
-Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, trước khi bắt đầu huấn luyện mô hình. Không khẳng định đạt điểm cụ thể; chỉ đánh dấu tiêu chí hoàn tất khi có sản phẩm và bằng chứng kiểm chứng được.
+Hoàn thành trung thực Bài kiểm tra 1 – tuần 4 và Bài kiểm tra 2 – tuần 6. Nhóm đã cho phép bắt đầu huấn luyện theo phạm vi Tuần 6. Không khẳng định đạt điểm cụ thể; chỉ đánh dấu mục đã làm khi có sản phẩm và bằng chứng kiểm chứng được. Vấn đáp và thao tác cá nhân cần xác nhận trực tiếp từ từng sinh viên/giảng viên.
 
 ## Trạng thái tổng quan
 
@@ -10,8 +10,9 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Điểm bắt đầu: commit `2f3d61c707359c824921013813f484abcea9ca6c` (`Initial commit`), chỉ có README và `.gitignore`.
 - Commit tham chiếu cho lượt rà soát cuối: `50a172ff7c733c91846ab53935dd62cb6d0fe42e`.
 - Trạng thái dữ liệu: đã xác thực Hugging Face, tải và xác minh `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; bản gốc nằm trong `data/raw/uitnlp_vihsd/` và bị Git bỏ qua. Schema là `free_text:string`, `label_id:int64`; ba split có tổng 33.400 dòng. Metadata license MIT và ghi chú tác giả “chỉ dùng cho nghiên cứu” chưa được đối chiếu; không tái phân phối dữ liệu.
-- Trạng thái mô hình: chưa huấn luyện, đúng phạm vi Bài kiểm tra 1.
-- Cập nhật gần nhất: 2026-10-29.
+- Trạng thái mô hình: Bài kiểm tra 1 không huấn luyện; Bài kiểm tra 2 đã có lượt baseline thật đầu tiên ngày 2026-11-10.
+- Cập nhật gần nhất: 2026-11-10.
+- Trạng thái hiện tại (2026-11-10): đã hoàn tất lượt baseline Tuần 6 trên nhánh `codex/exam2-week6`; kết quả, kiểm thử và giới hạn được ghi ở phần nhật ký bên dưới. Chưa có xác nhận hoàn thành cá nhân Tuần 6.
 
 ## Kế hoạch theo giai đoạn
 
@@ -55,7 +56,30 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 
 **Tiêu chí:** 9, 10 và hoàn thiện minh chứng cho 1–8. **Trạng thái:** báo cáo, notebook dữ liệu thật, năm bài thực hành, bảng phân công và hướng dẫn riêng cho từng thành viên đã cập nhật. Notebook đã chạy hết code cell trên dữ liệu thật; ngày/kết quả thực hành và xác nhận cá nhân của sinh viên vẫn cần bổ sung.
 
+## Giai đoạn 6 – Bài kiểm tra 2, tuần 6
+
+**Phạm vi:** lựa chọn và giải thích thuật toán, baseline, Pipeline không rò rỉ, CV trên Train, so sánh Validation, khóa cấu hình trước Test, phân tích lỗi. Không tìm kiếm siêu tham số quy mô lớn hoặc làm nội dung Tuần 8.
+
+**Dữ liệu:** kế thừa `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; Train 24.048, Validation 2.672, Test 6.680; giữ nguyên mã nhãn và split chính thức. Dữ liệu nằm ngoài Git.
+
+**Điều kiện hoàn tất kỹ thuật:** Dummy và bốn classifier chạy được; NB NumPy đối chiếu scikit-learn trên sparse; Pipeline fit TF-IDF trong từng fold; CV phân tầng và CV theo nhóm được báo riêng; chọn theo Validation trước khi chấm Test; không lưu nội dung bình luận.
+
+**Điều kiện hoàn tất cá nhân:** Tú và Tài phải tự chạy/chỉnh sửa một thao tác, giải thích mô hình và kết quả; Codex không ghi nhận thay việc này.
+
 ## Nhật ký tiến độ
+
+### 2026-11-10 – Khởi động và chạy baseline Tuần 6
+
+- Rà soát mã nguồn Tuần 4, rubric `TEC/Evaluation_Criteria.md`, trạng thái Git, dữ liệu cục bộ và môi trường Python. Branch `codex/exam2-week6` được tạo từ `58d0c12ca7b07dca186508e859984eb33456274`; các hồ sơ PDF/TeX/ảnh người dùng chưa theo dõi được giữ nguyên.
+- HF CLI đã xác thực với tài khoản hiện có; không đọc/ghi token. Dữ liệu cục bộ có provenance trùng revision yêu cầu và schema/size đã ghi nhận ở Tuần 4.
+- Đã thêm NB NumPy sparse; Pipeline chuẩn hóa + PyVi/TF-IDF + Dummy, NB, Logistic Regression, Linear SVC; CV metrics/nhóm; script chạy; tài liệu A–F; Notebook thực hành và bài vấn đáp.
+- Kiểm thử đầu tiên phần mới: `python -m pytest -q tests/test_models_and_evaluation.py` → 7 passed. Toàn bộ trước khi bật tích hợp → 30 passed, 2 skipped. Có thêm kiểm thử Notebook fixture sau đó.
+- Chạy kiểm thử cuối sau các sửa đổi: `$env:MPLBACKEND='Agg'; $env:VIHSD_RUN_INTEGRATION='1'; python -m pytest -q tests` → **33 passed in 36.58s**, gồm tích hợp dữ liệu thật và Notebook fixture.
+- Xác minh provenance `uitnlp/vihsd` revision `88e81b36ca376867640dad9df295e0f7d499ab80`; counts 24.048/2.672/6.680, schema và nhãn 0/1/2 hợp lệ.
+- Thực nghiệm word TF-IDF 166.981 chiều, 3 folds, seed 42. CV Macro F1 SVC: StratifiedKFold `0,6262 ± 0,0049`, grouped `0,6117 ± 0,0078`. Trong Train có 22.500 nhóm khóa cho 24.048 dòng, 1.548 lặp dư, 132 nhóm xung đột nhãn. Stratified CV trung bình 681,7 nhóm đi qua train/validation mỗi fold; grouped CV bằng 0.
+- Validation chọn `linear_svc_balanced` theo Macro F1 `0,6184`, trước khi đọc nhãn Test. Test chính thức: Macro F1 `0,6017`, Accuracy `0,8618`; Test sensitivity không giao khóa Train: 5.866 dòng còn lại, Macro F1 `0,5926`, Accuracy `0,8560`. Lỗi chính: OFFENSIVE recall `0,2365`; có 243 OFFENSIVE và 252 HATE bị dự đoán thành CLEAN.
+- Script đã tạo và kiểm tra các kết quả tổng hợp an toàn ở `reports/exam2_results/`. Lượt chạy lưu đầy đủ kết quả rồi lỗi ở thông báo cuối do encoding console; đã sửa encoding. Không chạy lại toàn bộ script sau sửa vì Test đã được chấm một lần; kiểm tra CLI, compile, toàn bộ kiểm thử và Notebook fixture đạt sau sửa.
+- Chưa chạy combined word+char; chưa tìm kiếm siêu tham số; chưa huấn luyện PhoBERT; chưa xác nhận Tuần 6 cá nhân của Tú/Tài; tiêu chí vấn đáp/thực hành vẫn cần sinh viên và giảng viên.
 
 > Các ghi chú ngày 2026-10-23 dưới đây là ảnh chụp lịch sử khi chưa có quyền truy cập. Chúng được cập nhật bởi trạng thái và bằng chứng ngày 2026-10-29, không mô tả trạng thái hiện tại.
 
@@ -183,3 +207,28 @@ Hoàn thành trung thực Bài kiểm tra 1 – tuần 4, gồm 10 tiêu chí, t
 - Tài báo cáo 25/25 kiểm thử đạt trong 24,23 giây; Codex đã chạy lại bộ tích hợp cùng mã nguồn trước đó và nhận **25 passed**. Chênh lệch thời gian chạy là bình thường; kiểm thử không xác nhận người thực hiện.
 - Đồng bộ nhật ký đóng góp, checklist Tài, bảng phân công, bài thực hành và trạng thái tiêu chí. Tài tự báo cáo 10/10 bước; báo cáo chưa nêu rõ đã trả lời bộ câu hỏi vấn đáp, và không có người chứng kiến độc lập phần nói/thực hành tại chỗ. Không huấn luyện mô hình hoặc công khai dữ liệu/bình luận thật.
 - Việc còn lại: Tài xem lại tính chính xác của nhật ký; nếu rubric yêu cầu vấn đáp/thao tác trực tiếp, giảng viên cần đánh giá phần đó. Không tự gán điểm hoặc xác nhận của giảng viên.
+
+### 2026-11-10 – Khắc phục kiểm toán Bài kiểm tra 2
+
+- Làm việc trên nhánh `codex/exam2-week6`, commit gốc `ded433f60ec794d9150708dce6310545e7fd2a20`; đọc lại `AGENTS.md`, tiến độ, tài liệu `TEC/Task.md`, `TEC/Evaluation_Criteria.md`, kế hoạch và báo cáo Tuần 6 trước khi sửa.
+- Tách CLI thành `development` mặc định và `final-test` tường minh. Development chỉ yêu cầu Train/Validation; CV và fit/đánh giá chỉ chạy trên Train/Validation. Loader Hugging Face dùng danh sách split được yêu cầu, Development runner từ chối bất kỳ mapping nào có split thừa. Manifest xác nhận không tải/chấm Test. Mỗi mode/feature/model ghi vào thư mục mới; đường dẫn cũ, thư mục cha và đường dẫn ra ngoài bị từ chối để tránh ghi đè.
+- Final-test yêu cầu `--locked-config` có Validation Macro F1, snapshot đầy đủ classifier parameters và xác nhận đã khóa trước đánh giá; không truyền Validation vào hàm final, không ghi selection mới và ghi kết quả vào thư mục riêng. Kiểm thử final mode chỉ dùng fixture tổng hợp; **không chạy Test ViHSD chính thức**.
+- Thực nghiệm Development trên revision `88e81b36ca376867640dad9df295e0f7d499ab80` thoát mã `0`: Train 24.048, Validation 2.672; 3-fold StratifiedKFold và StratifiedGroupKFold; Linear SVC được chọn bằng Validation Macro F1 `0,6183585`. CV Macro F1 mean/std SVC là `0,6262 ± 0,0049` (stratified) và `0,6117 ± 0,0078` (grouped). Lượt cuối lưu tại `reports/exam2_results/development/word/acceptance-20261110/`; manifest ghi `test_data_loaded=false`, `test_evaluated=false`, selection lưu snapshot tham số; kết quả tổng hợp không có bình luận hay dự đoán từng dòng.
+- Notebook Tuần 6 đã chạy tuần tự toàn bộ code cell trên ViHSD thật: chỉ có Train/Validation, 30 kết quả fold, chọn Linear SVC theo Validation, không có biến Test. Kiểm thử Notebook tiếp tục dùng fixture để có bài chạy ngắn, không lưu output vào `.ipynb`.
+- Bổ sung kiểm thử NaN, `Inf`, `-Inf`, alpha âm/0 và đầu vào vector toàn 0 cho NumPy MultinomialNB. Công thức/xác suất hiện có không đổi; chỉ thêm xác thực `alpha` hữu hạn và dương. Bổ sung `pytest` vào `requirements-dev.txt`.
+- Kiểm tra cuối: `python -m compileall -q src scripts tests` đạt; `$env:MPLBACKEND='Agg'; $env:VIHSD_RUN_INTEGRATION='1'; python -m pytest -q tests` — **42 passed, 5 subtests passed in 26.16s**. Kiểm thử gồm tích hợp schema/audit dữ liệu thật, loader Development, notebook fixture và kiểm thử khóa cấu hình final-test trên fixture.
+- Cập nhật báo cáo với underfitting của Dummy/NB theo số Train/Validation đã lưu; phân biệt giả thuyết và bằng chứng cho mô hình tuyến tính; Train–Validation gap, OFFENSIVE recall, liên kết biểu đồ/bảng/confusion, giới hạn chuẩn hóa/rò rỉ và phương pháp xem hệ số đặc trưng cục bộ. Không công bố từ/cụm từ quan trọng có thể lộ nội dung.
+- Thêm khai báo trung thực Codex GPT-6 Luna đã hỗ trợ thiết kế, lập trình, kiểm thử, chạy thực nghiệm và tài liệu. Không khẳng định Tú/Tài đã rà soát hay xác nhận; báo cáo yêu cầu hai bạn tự đọc và xác nhận trước khi nộp.
+- Cập nhật hướng dẫn riêng Tú/Tài, câu hỏi vấn đáp, kế hoạch và Notebook với bài 10–15 phút, chỉ dùng Development/fixture. Trạng thái cá nhân và xác nhận giảng viên vẫn chưa được đánh dấu hoàn thành; Tú cần thực hành NB `alpha`, baseline/confusion; Tài cần Pipeline, grouped CV, `C`/`class_weight`, CV mean/std; cả hai cần xác nhận khai báo AI.
+- SHA-256 trước/sau không đổi: `test_metrics.csv` `45A3B655CAA77DF23FC3AA800E33FA59CCC2C77C2A2C6D86FF7B4448318321B5`; `test_confusion_matrix.csv` `60305087146BD4CE622BDDB13678011580FA10888542A1F97B39AB177BAA207C`; `run_manifest.json` `F1198EE39798E91C83B0FBF5D19659211620ED9DC5A89E2C38AAC4FF1DDB51DA`; `selection.json` `08FA31A8F607436453FB48AB901EDC64F1C9086BB1683CF09E7EFFAB3B4310A8`.
+- Không chạy final-test, không tối ưu siêu tham số, không thêm mô hình mới. Diff cuối và nội dung đã kiểm tra; chỉ đẩy mã, tài liệu và bảng/biểu đồ Development tổng hợp an toàn. Dữ liệu gốc, `TEC/`, token, bình luận và các tệp Tuần 4 chưa theo dõi không được đưa vào commit.
+
+### 2026-11-11 – Ghi nhận tự báo cáo thực hành Tuần 6
+
+- Nhận nội dung tự xác nhận của Tú và Tài về bài thực hành 10–15 phút và khai báo AI. Checklist cá nhân, phân công nhóm, nhật ký đóng góp và báo cáo được cập nhật theo đúng dạng **sinh viên tự báo cáo**; phần vấn đáp/thực hành tại chỗ vẫn chờ giảng viên đánh giá, không ghi nhận quan sát độc lập.
+- Tái lập các số liệu của Tú trên ViHSD revision `88e81b36ca376867640dad9df295e0f7d499ab80`, chỉ dùng Train/Validation 24.048/2.672: NumPy NB alpha 1.0 đạt Train/Validation Macro F1 `0,3117893/0,3028625`; alpha 0.5 đạt `0,4560731/0,3126742`, Validation F1 HATE `0,0357143` và F1 OFFENSIVE `0`. Confusion matrix alpha 0.5 có OFFENSIVE→CLEAN 208, OFFENSIVE→HATE 4, HATE→CLEAN 265, CLEAN→HATE 1. Baseline Dummy Validation Macro F1 là `0,3003`, Accuracy `81,96%`.
+- Tái lập các cấu hình `C=0.5` của Tài bằng seed 42 trên Train/Validation: SVC CV Stratified `0,6273107 ± 0,0049676`, Grouped `0,6109908 ± 0,0065381`, Validation `0,6134283`; Logistic Regression lần lượt `0,5921789 ± 0,0013735`, `0,5814552 ± 0,0061574`, Validation `0,5883942`. Các giá trị làm tròn khớp phần tự báo cáo. Cấu hình baseline `C=1.0` được đối chiếu với Development đã lưu ngày 2026-11-10.
+- Các phép tái lập ở trên chỉ xác nhận khả năng lặp lại số liệu, không xác nhận ai đã thao tác hoặc giải thích. Không nạp Test cho các bài thực hành và không dùng Test để chọn tham số.
+- Người dùng cung cấp log ghi một lần chạy kiểm tra Notebook Tuần 6 thoát mã 1 nhưng không có traceback. Kiểm tra lại trong lượt này: test Notebook fixture **1 passed in 4.19s**; Notebook Development trên dữ liệu thật chạy toàn bộ 6 code cell, có Train/Validation, 30 kết quả fold, chọn SVC theo Validation, không có biến Test. Lỗi cũ chưa xác định nguyên nhân và không tái hiện được trên phiên bản hiện tại.
+- Kiểm thử tích hợp toàn bộ sau cập nhật: `$env:MPLBACKEND='Agg'; $env:VIHSD_RUN_INTEGRATION='1'; python -m pytest -q tests` — **42 passed, 5 subtests passed in 26.66s**. Chỉ thay đổi tài liệu sau commit trước; mã nguồn và Test chính thức không đổi.
+- Tú và Tài đã tự xác nhận đã đọc mục khai báo AI; cần giữ cách ghi này là tự báo cáo. Việc giảng viên vấn đáp/xác nhận vẫn chưa có minh chứng.
